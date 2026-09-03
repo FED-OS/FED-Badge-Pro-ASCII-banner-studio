@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FED‑Badge Pro · Badge & ASCII Banner Studio</title>
+  <meta name="description" content="Generate GitHub README badges from Shields.io, Badgen, Badges.ws, BadgeWind, Raw SVG, and GitHub Actions — plus an ASCII animation studio for your project folders." />
+  <link rel="stylesheet" href="styles.css" />
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+  <h1>
+    ⚡ FED‑Badge
+    <small>Pro</small>
+    <span class="badge-version">v3.1</span>
+  </h1>
+  <nav>
+    <button class="active" data-tab="generator">Generator</button>
+    <button data-tab="presets">Presets</button>
+    <button data-tab="studio">ASCII Studio</button>
+    <button data-tab="docs">Docs</button>
+  </nav>
+</header>
+
+<!-- ===== MAIN ===== -->
+<div class="main">
+
+  <!-- ===== TAB: GENERATOR ===== -->
+  <div class="tab-content active" id="tab-generator">
+    <div class="panel">
+      <h2>🎛️ Badge Controls</h2>
+      <div class="grid-2">
+        <div>
+          <label>Target Link (href)</label>
+          <input type="text" id="linkUrl" value="https://fedpromptly.com" placeholder="https://...">
+        </div>
+        <div>
+          <label>Style (optional)</label>
+          <input type="text" id="styleInput" value="flat" placeholder="flat, for-the-badge, social">
+        </div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <label>Left Label</label>
+          <input type="text" id="leftText" value="FED-OS" placeholder="e.g. FED-OS">
+        </div>
+        <div>
+          <label>Right Status</label>
+          <input type="text" id="rightText" value="Active" placeholder="e.g. Active">
+        </div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <label>Right Color</label>
+          <div class="color-row">
+            <input type="color" id="colorPicker" value="#0052cc" />
+            <input type="text" id="rightColor" value="0052cc" placeholder="hex">
+          </div>
+        </div>
+        <div>
+          <label>Label Color</label>
+          <div class="color-row">
+            <input type="color" id="labelColorPicker" value="#24292e" />
+            <input type="text" id="leftColor" value="24292e" placeholder="hex">
+          </div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <label>Repository (for GitHub Actions)</label>
+          <input type="text" id="repoInput" value="Fedpromptly/demo-repository" placeholder="owner/repo">
+        </div>
+        <div>
+          <label>Workflow Filename (for Actions)</label>
+          <input type="text" id="workflowInput" value="ci.yml" placeholder="e.g. ci.yml">
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== BADGE GRID ===== -->
+    <div class="badge-grid" id="badgeGrid"></div>
+
+    <!-- ===== COPY ALL ===== -->
+    <div class="copy-all-row">
+      <button class="copy-all-btn" id="copyAllHtmlBtn">📋 Copy All HTML</button>
+      <button class="copy-all-btn" id="copyAllMarkdownBtn">📝 Copy All Markdown</button>
+    </div>
+  </div>
+
+  <!-- ===== TAB: PRESETS ===== -->
+  <div class="tab-content" id="tab-presets">
+    <div class="panel">
+      <h2>📌 Quick Presets</h2>
+      <p>Click any preset to load it into the generator. You can then tweak and copy.</p>
+      <div class="preset-group" id="presetGroup"></div>
+    </div>
+  </div>
+
+  <!-- ===== TAB: ASCII STUDIO (FED-ETCH) ===== -->
+  <div class="tab-content" id="tab-studio">
+    <div class="panel">
+      <h2>🖥️ FED‑ETCH — ASCII Animation Studio</h2>
+      <p>Scan a local folder and render its file structure as animated ASCII art for your README banners. Or hit <b>Demo Mode</b> to try it instantly with a built‑in mock repository.</p>
+
+      <!-- Toolbar -->
+      <div class="studio-toolbar">
+        <button class="studio-btn" id="scanFolderBtn">📁 Scan Folder</button>
+        <button class="studio-btn secondary" id="demoModeBtn">✨ Demo Mode</button>
+        <button class="studio-btn secondary" id="playBtn" disabled>▶ Play</button>
+        <button class="studio-btn secondary" id="pauseBtn" disabled>⏸ Pause</button>
+        <button class="studio-btn secondary" id="restartBtn" disabled>↺ Restart</button>
+        <button class="studio-btn" id="recordBtn" disabled>⏺ Record WebM</button>
+        <button class="studio-btn warn" id="clearBtn" disabled>🗑 Clear</button>
+      </div>
+
+      <!-- Controls -->
+      <div class="studio-controls">
+        <div class="style-wrap">
+          <label for="animStyle">Animation</label>
+          <select id="animStyle">
+            <option value="cascade">Cascade</option>
+            <option value="matrix">Matrix Rain</option>
+            <option value="typewriter">Typewriter</option>
+            <option value="reveal">Reveal Wipe</option>
+          </select>
+        </div>
+        <div class="speed-wrap">
+          <label for="speedSlider">Speed</label>
+          <input type="range" id="speedSlider" min="1" max="20" value="8" />
+          <span class="speed-val" id="speedVal">8×</span>
+        </div>
+        <span class="stat" id="fileStat">Files: <b>0</b></span>
+        <span class="stat" id="dirStat">Dirs: <b>0</b></span>
+      </div>
+
+      <!-- Progress -->
+      <div class="progress-wrap" id="progressWrap">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+      <!-- Animated canvas -->
+      <div class="ascii-canvas-wrap">
+        <canvas id="asciiCanvas" width="900" height="360"></canvas>
+        <div class="ascii-empty-hint" id="asciiHint">
+          <div class="big">🗂️</div>
+          <div>Scan a folder or load Demo Mode to begin</div>
+        </div>
+      </div>
+
+      <!-- Static ASCII export -->
+      <div class="ascii-static" id="asciiStaticWrap" style="display:none;">
+        <div class="studio-toolbar" style="margin-bottom:12px;">
+          <button class="studio-btn" id="copyAsciiBtn">📋 Copy ASCII</button>
+          <button class="studio-btn secondary" id="downloadTxtBtn">⬇ Download .txt</button>
+        </div>
+        <pre id="asciiStatic"></pre>
+      </div>
+
+      <!-- Scan config -->
+      <div class="scan-config">
+        <div class="field">
+          <label>Max Files</label>
+          <input type="number" id="cfgMaxFiles" value="500" min="10" max="5000" />
+        </div>
+        <div class="field">
+          <label>Max Depth</label>
+          <input type="number" id="cfgMaxDepth" value="15" min="1" max="30" />
+        </div>
+        <div class="field">
+          <label>Max File Size (KB)</label>
+          <input type="number" id="cfgMaxSize" value="50" min="1" max="500" />
+        </div>
+        <div class="field">
+          <span class="hint">Limits keep scans fast & safe.<br>Folders starting with <code>.</code> are skipped.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TAB: DOCS ===== -->
+  <div class="tab-content" id="tab-docs">
+    <div class="panel">
+      <h2>📖 Documentation</h2>
+
+      <div class="docs-section">
+        <h3>How It Works</h3>
+        <p>FED‑Badge generates badges using multiple services and includes an ASCII animation studio. Fill in the controls, copy the output that works best for you, or scan a folder for animated ASCII art.</p>
+      </div>
+
+      <div class="docs-section">
+        <h3>Badge Services</h3>
+        <ul style="list-style:none; padding-left:0;">
+          <li><strong>Shields.io</strong> – Full-featured, supports logos, style, label colour, cache, links.</li>
+          <li><strong>Badgen.net</strong> – Simple and fast, no extra parameters.</li>
+          <li><strong>Badges.ws</strong> – Similar to Badgen, supports style.</li>
+          <li><strong>BadgeWind</strong> – Tailwind‑styled badges via API.</li>
+          <li><strong>Raw SVG</strong> – Self-contained SVG, works offline.</li>
+          <li><strong>GitHub Actions</strong> – Native workflow status badge (exact URL format).</li>
+        </ul>
+      </div>
+
+      <div class="docs-section">
+        <h3>Badge Usage</h3>
+        <p>1. Enter your label, message, and colours.<br>
+        2. Choose a style or leave default.<br>
+        3. Copy the HTML, Markdown, or raw URL from any badge card.<br>
+        4. Paste into your README or website.</p>
+        <p><code>HTML</code> – works in GitHub READMEs, websites.<br>
+        <code>Markdown</code> – standard <code>[![alt](url)](link)</code> format.<br>
+        <code>Output</code> – raw badge URL or SVG code.</p>
+      </div>
+
+      <div class="docs-section">
+        <h3>GitHub Actions Workflow</h3>
+        <p>Enter your repository (e.g., <code>owner/repo</code>) and workflow filename (e.g., <code>ci.yml</code>) to generate the exact badge URL that GitHub renders.</p>
+      </div>
+
+      <div class="docs-section">
+        <h3>FED‑ETCH ASCII Studio</h3>
+        <ol class="step-list">
+          <li>Click <b>Scan Folder</b> and choose any directory (Chrome / Edge use the native picker; Firefox / Safari fall back to a folder upload dialog).</li>
+          <li>The studio reads your structure and renders an ASCII tree using box‑drawing characters.</li>
+          <li>Press <b>Play</b> to animate the tree as a cascading rain of file names.</li>
+          <li>Adjust the <b>Speed</b> slider to taste.</li>
+          <li>Use <b>Copy ASCII</b> or <b>Download .txt</b> to export the static tree for your README.</li>
+          <li>No folder handy? <b>Demo Mode</b> loads a built‑in mock repository instantly.</li>
+        </ol>
+        <p>Folders whose names begin with a dot (<code>.</code>) are skipped, and scan limits (max files, depth, size) protect your browser from enormous directories.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <p>⚡ FED‑Badge Pro · Built for GitHub · Badges + ASCII art, all in one place.</p>
+  </footer>
+</div>
+
+<!-- Hidden folder input for webkitdirectory fallback -->
+<input type="file" id="folderInput" webkitdirectory directory multiple />
+
+<!-- ===== TOAST ===== -->
+<div class="toast" id="toast">✅ Copied!</div>
+
+<script>
+  /* ======================================================================
+     SECTION 1 — Badge Generator (Generator + Presets tabs)
+     ====================================================================== */
+
+  // ===== DOM refs =====
+  const linkUrl        = document.getElementById('linkUrl');
+  const styleInput     = document.getElementById('styleInput');
+  const leftText       = document.getElementById('leftText');
+  const rightText      = document.getElementById('rightText');
+  const rightColor     = document.getElementById('rightColor');
+  const leftColor      = document.getElementById('leftColor');
+  const colorPicker    = document.getElementById('colorPicker');
+  const labelColorPicker = document.getElementById('labelColorPicker');
+  const repoInput      = document.getElementById('repoInput');
+  const workflowInput  = document.getElementById('workflowInput');
+  const badgeGrid      = document.getElementById('badgeGrid');
+  const toast          = document.getElementById('toast');
+
+  // ===== Color picker sync =====
+  colorPicker.addEventListener('input', () => {
+    rightColor.value = colorPicker.value.replace('#', '');
+    generateAll();
+  });
+  rightColor.addEventListener('input', () => {
+    let v = rightColor.value.trim().replace('#', '');
+    if (/^[0-9a-fA-F]{6}$/.test(v)) colorPicker.value = '#' + v;
+    generateAll();
+  });
+  labelColorPicker.addEventListener('input', () => {
+    leftColor.value = labelColorPicker.value.replace('#', '');
+    generateAll();
+  });
+  leftColor.addEventListener('input', () => {
+    let v = leftColor.value.trim().replace('#', '');
+    if (/^[0-9a-fA-F]{6}$/.test(v)) labelColorPicker.value = '#' + v;
+    generateAll();
+  });
+
+  // ===== Presets (real links — no placeholders) =====
+  const PRESETS = {
+    'fedos':           { link: 'https://fedpromptly.com',                  left: 'FED-OS',      right: 'Active',       rightColor: '0052cc', leftColor: '24292e' },
+    'dpromptly':       { link: 'https://fedpromptly.com',                  left: 'Network',     right: 'DPromptly',    rightColor: 'cc317c', leftColor: '24292e' },
+    'embeddable':      { link: 'https://fedpromptly.com',                  left: 'Code',        right: 'Embeddable',   rightColor: '2ea043', leftColor: '24292e' },
+    'community':       { link: 'https://www.fedpromptly.com/forum',        left: 'Community',   right: 'Join Forum',   rightColor: '5865f2', leftColor: '24292e' },
+    'github-sponsors': { link: 'https://github.com/sponsors/FED-OS',       left: 'Sponsor',     right: 'GitHub',       rightColor: 'ea4aaa', leftColor: '24292e' },
+    'kofi':            { link: 'https://ko-fi.com/fedpromptly',            left: 'Ko-fi',       right: 'Support Me',   rightColor: 'ff5e5b', leftColor: '29abe2' },
+    'build-passing':   { link: 'https://github.com/FED-OS',                left: 'Build',       right: 'Passing',      rightColor: 'brightgreen', leftColor: '555' },
+    'coverage':        { link: 'https://github.com/FED-OS',                left: 'Coverage',    right: '100%',         rightColor: 'green',  leftColor: '555' },
+    'license':         { link: 'https://github.com/FED-OS',                left: 'License',     right: 'MIT',          rightColor: 'blue',   leftColor: '555' },
+    'version':         { link: 'https://github.com/FED-OS',                left: 'Version',     right: 'v3.1.0',       rightColor: 'orange', leftColor: '555' },
+    'discord':         { link: 'https://www.fedpromptly.com/forum',        left: 'Forum',       right: 'Join Us',      rightColor: '5865f2', leftColor: '24292e' },
+    'repo':            { link: 'https://github.com/FED-OS',                left: 'GitHub',      right: 'FED-OS',       rightColor: '181717', leftColor: '30363d' }
+  };
+
+  // Render preset buttons dynamically
+  const presetGroup = document.getElementById('presetGroup');
+  Object.keys(PRESETS).forEach(key => {
+    const btn = document.createElement('button');
+    btn.className = 'preset-btn';
+    btn.textContent = PRESETS[key].left;
+    btn.title = `${PRESETS[key].left} · ${PRESETS[key].right}`;
+    btn.addEventListener('click', () => applyPreset(key));
+    presetGroup.appendChild(btn);
+  });
+
+  function applyPreset(name) {
+    const p = PRESETS[name];
+    if (!p) return;
+    linkUrl.value = p.link;
+    leftText.value = p.left;
+    rightText.value = p.right;
+    rightColor.value = p.rightColor;
+    leftColor.value = p.leftColor;
+    if (/^[0-9a-fA-F]{6}$/.test(p.rightColor)) colorPicker.value = '#' + p.rightColor;
+    if (/^[0-9a-fA-F]{6}$/.test(p.leftColor))  labelColorPicker.value = '#' + p.leftColor;
+    switchTab('generator');
+    generateAll();
+    showToast(`✅ Loaded "${p.left} · ${p.right}"`);
+  }
+
+  // ===== Generate all badges =====
+  function generateAll() {
+    const link    = linkUrl.value.trim() || 'https://example.com';
+    const label   = leftText.value.trim() || 'LABEL';
+    const message = rightText.value.trim() || 'STATUS';
+    let color     = rightColor.value.trim() || '0052cc';  color = color.replace('#', '');
+    let lblColor  = leftColor.value.trim()  || '555';      lblColor = lblColor.replace('#', '');
+    const style   = styleInput.value.trim();
+    const repo    = repoInput.value.trim() || 'owner/repo';
+    const wf      = workflowInput.value.trim() || 'ci.yml';
+
+    const services = [];
+
+    // 1. Shields.io  (double-escape hyphens: Shields uses "-" as field separator,
+    //    so literal hyphens in label/message must be written as "--")
+    const shieldLabel   = label.replace(/-/g, '--');
+    const shieldMessage = message.replace(/-/g, '--');
+    let shieldUrl = `https://img.shields.io/badge/${encodeURIComponent(shieldLabel)}-${encodeURIComponent(shieldMessage)}-${color}`;
+    const sp = new URLSearchParams();
+    if (lblColor) sp.set('labelColor', lblColor);
+    if (style)    sp.set('style', style);
+    if (sp.toString()) shieldUrl += '?' + sp.toString();
+    services.push({ name: 'Shields.io', output: shieldUrl, isSVG: false });
+
+    // 2. Badgen.net
+    services.push({ name: 'Badgen.net', output: `https://badgen.net/badge/${encodeURIComponent(label)}/${encodeURIComponent(message)}/${color}`, isSVG: false });
+
+    // 3. Badges.ws
+    let bwUrl = `https://badges.ws/badge/${encodeURIComponent(label)}/${encodeURIComponent(message)}/${color}`;
+    if (style) bwUrl += `?style=${style}`;
+    services.push({ name: 'Badges.ws', output: bwUrl, isSVG: false });
+
+    // 4. BadgeWind
+    const bwP = new URLSearchParams();
+    bwP.set('label', label); bwP.set('message', message); bwP.set('color', color);
+    if (lblColor) bwP.set('labelColor', lblColor);
+    if (style)    bwP.set('style', style);
+    services.push({ name: 'BadgeWind', output: `https://badgewind.vercel.app/api/badge?${bwP.toString()}`, isSVG: false });
+
+    // 5. Raw SVG
+    const leftW  = Math.max(label.length * 7 + 14, 40);
+    const rightW = Math.max(message.length * 7 + 14, 45);
+    const totalW = leftW + rightW;
+    const lAnchor = Math.floor((leftW / 2) * 10);
+    const rAnchor = Math.floor((leftW + (rightW / 2)) * 10);
+    const lLen = Math.floor((leftW - 10) * 10);
+    const rLen = Math.floor((rightW - 10) * 10);
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${totalW}" height="20" role="img">
+  <clipPath id="r"><rect width="${totalW}" height="20" rx="4" fill="#fff"/></clipPath>
+  <g clip-path="url(#r)">
+    <rect width="${leftW}" height="20" fill="#${lblColor}"/>
+    <rect x="${leftW}" width="${rightW}" height="20" fill="#${color}"/>
+  </g>
+  <g fill="#fff" text-anchor="middle" font-family="Verdana,sans-serif" text-rendering="geometricPrecision" font-size="110">
+    <text x="${lAnchor}" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="${lLen}">${label}</text>
+    <text x="${lAnchor}" y="140" transform="scale(.1)" textLength="${lLen}">${label}</text>
+    <text x="${rAnchor}" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="${rLen}">${message}</text>
+    <text x="${rAnchor}" y="140" transform="scale(.1)" textLength="${rLen}">${message}</text>
+  </g>
+</svg>`;
+    services.push({ name: 'Raw SVG', output: svg, isSVG: true });
+
+    // 6. GitHub Actions
+    services.push({ name: 'GitHub Actions', output: `https://github.com/${repo}/actions/workflows/${wf}/badge.svg`, isSVG: false });
+
+    // Render grid
+    badgeGrid.innerHTML = '';
+    services.forEach(service => {
+      const card = document.createElement('div');
+      card.className = 'badge-card';
+
+      const nameEl = document.createElement('div');
+      nameEl.className = 'service-name';
+      nameEl.textContent = service.name;
+      card.appendChild(nameEl);
+
+      const previewEl = document.createElement('div');
+      previewEl.className = 'preview';
+      if (service.isSVG) {
+        previewEl.innerHTML = service.output;
+      } else {
+        const img = document.createElement('img');
+        img.src = service.output;
+        img.alt = `${label}: ${message}`;
+        previewEl.appendChild(img);
+      }
+      card.appendChild(previewEl);
+
+      const outputEl = document.createElement('div');
+      outputEl.className = 'output';
+      outputEl.textContent = service.output;
+      card.appendChild(outputEl);
+
+      const btnGroup = document.createElement('div');
+      btnGroup.className = 'btn-group';
+
+      const copyBtn = document.createElement('button');
+      copyBtn.className = 'btn btn-copy';
+      copyBtn.textContent = '📋 Output';
+      copyBtn.addEventListener('click', () => copyText(service.output, `${service.name} output`));
+      btnGroup.appendChild(copyBtn);
+
+      if (!service.isSVG) {
+        const htmlBtn = document.createElement('button');
+        htmlBtn.className = 'btn';
+        htmlBtn.textContent = '📋 HTML';
+        htmlBtn.addEventListener('click', () => {
+          const html = `<a href='${link}' target='_blank'>\n    <img height='36' style='border:0px;height:36px;' src='${service.output}' border='0' alt='${label}: ${message}' />\n</a>`;
+          copyText(html, `${service.name} HTML`);
+        });
+        btnGroup.appendChild(htmlBtn);
+
+        const mdBtn = document.createElement('button');
+        mdBtn.className = 'btn btn-markdown';
+        mdBtn.textContent = '📝 Markdown';
+        mdBtn.addEventListener('click', () => {
+          const md = `[![${label}: ${message}](${service.output})](${link})`;
+          copyText(md, `${service.name} Markdown`);
+        });
+        btnGroup.appendChild(mdBtn);
+      }
+
+      card.appendChild(btnGroup);
+      badgeGrid.appendChild(card);
+    });
+
+    // Store all for Copy All
+    window._allHtml = services.filter(s => !s.isSVG).map(s =>
+      `<a href='${link}' target='_blank'>\n    <img height='36' style='border:0px;height:36px;' src='${s.output}' border='0' alt='${label}: ${message}' />\n</a>`
+    ).join('\n\n');
+    window._allMd = services.filter(s => !s.isSVG).map(s =>
+      `[![${label}: ${message}](${s.output})](${link})`
+    ).join('\n\n');
+  }
+
+  // ===== Copy helper =====
+  function copyText(text, label) {
+    navigator.clipboard.writeText(text).then(() => showToast(`✅ ${label || 'Copied'}!`)).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = text; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+      showToast(`✅ ${label || 'Copied'}!`);
+    });
+  }
+  window.copyText = copyText;
+
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => toast.classList.remove('show'), 2000);
+  }
+  window.showToast = showToast;
+
+  // Copy All
+  document.getElementById('copyAllHtmlBtn').addEventListener('click', () => copyText(window._allHtml || '', 'All HTML snippets'));
+  document.getElementById('copyAllMarkdownBtn').addEventListener('click', () => copyText(window._allMd || '', 'All Markdown snippets'));
+
+  // Bind inputs
+  [linkUrl, styleInput, leftText, rightText, rightColor, leftColor, repoInput, workflowInput].forEach(el =>
+    el.addEventListener('input', generateAll)
+  );
+
+  /* ======================================================================
+     SECTION 2 — FED‑ETCH ASCII Animation Studio
+     ====================================================================== */
+
+  const ASCII = (function () {
+    const canvas      = document.getElementById('asciiCanvas');
+    const ctx         = canvas.getContext('2d');
+    const hint        = document.getElementById('asciiHint');
+    const progressWrap = document.getElementById('progressWrap');
+    const progressBar  = document.getElementById('progressBar');
+    const fileStat     = document.getElementById('fileStat');
+    const dirStat      = document.getElementById('dirStat');
+    const staticWrap   = document.getElementById('asciiStaticWrap');
+    const staticPre    = document.getElementById('asciiStatic');
+    const scanBtn      = document.getElementById('scanFolderBtn');
+    const demoBtn      = document.getElementById('demoModeBtn');
+    const playBtn      = document.getElementById('playBtn');
+    const pauseBtn     = document.getElementById('pauseBtn');
+    const restartBtn   = document.getElementById('restartBtn');
+    const recordBtn    = document.getElementById('recordBtn');
+    const clearBtn     = document.getElementById('clearBtn');
+    const animStyleSel = document.getElementById('animStyle');
+    const copyAsciiBtn = document.getElementById('copyAsciiBtn');
+    const downloadBtn  = document.getElementById('downloadTxtBtn');
+    const speedSlider  = document.getElementById('speedSlider');
+    const speedVal     = document.getElementById('speedVal');
+    const folderInput  = document.getElementById('folderInput');
+    const cfgMaxFiles  = document.getElementById('cfgMaxFiles');
+    const cfgMaxDepth  = document.getElementById('cfgMaxDepth');
+    const cfgMaxSize   = document.getElementById('cfgMaxSize');
+
+    // Restore speed pref
+    const savedSpeed = parseInt(localStorage.getItem('fed-etch-speed'), 10);
+    if (!isNaN(savedSpeed)) { speedSlider.value = savedSpeed; }
+    speedVal.textContent = speedSlider.value + '×';
+
+    // Restore animation style pref
+    const savedStyle = localStorage.getItem('fed-etch-style');
+    if (savedStyle) { animStyleSel.value = savedStyle; }
+
+    let state = {
+      tree: null,      // root node {name, children:[], isDir}
+      asciiLines: [],  // rendered ASCII lines (strings)
+      drops: [],       // active cascade drops
+      fileCount: 0,
+      dirCount: 0,
+      playing: false,
+      rafId: null,
+      speed: parseInt(speedSlider.value, 10),
+      style: animStyleSel.value,
+      // WebM recording state
+      recorder: null,
+      recording: false,
+      chunks: []
+    };
+
+    // ---- Mock repository for Demo Mode ----
+    const DEMO_REPO = {
+      name: 'FED-Badge',
+      isDir: true,
+      children: [
+        { name: 'index.html', isDir: false },
+        { name: 'styles.css', isDir: false },
+        { name: 'README.md', isDir: false },
+        { name: 'CHANGELOG.md', isDir: false },
+        { name: 'CONTRIBUTING.md', isDir: false },
+        { name: 'LICENSE', isDir: false },
+        { name: 'LICENSE.md', isDir: false },
+        { name: 'SECURITY.md', isDir: false },
+        { name: '.gitignore', isDir: false },
+        {
+          name: '.github', isDir: true, children: [
+            { name: 'FUNDING.yml', isDir: false }
+          ]
+        },
+        {
+          name: 'docs', isDir: true, children: [
+            { name: 'guide.md', isDir: false },
+            { name: 'examples.md', isDir: false }
+          ]
+        },
+        {
+          name: 'screenshots', isDir: true, children: [
+            { name: 'generator.png', isDir: false },
+            { name: 'studio.png', isDir: false }
+          ]
+        }
+      ]
+    };
+
+    // ---- Build a tree from FileSystemDirectoryHandle (Chrome/Edge) ----
+    async function buildTreeFromHandle(dirHandle, depth, maxDepth, maxFiles, maxSize, counter) {
+      if (depth > maxDepth || counter.files > maxFiles) return { name: dirHandle.name, isDir: true, children: [] };
+      const node = { name: dirHandle.name, isDir: true, children: [] };
+      counter.dirs++;
+      dirStat.querySelector('b').textContent = counter.dirs;
+
+      try {
+        for await (const entry of dirHandle.values()) {
+          if (counter.files > maxFiles) break;
+          if (entry.name.startsWith('.')) continue;
+          if (entry.kind === 'directory') {
+            const child = await buildTreeFromHandle(entry, depth + 1, maxDepth, maxFiles, maxSize, counter);
+            node.children.push(child);
+          } else {
+            counter.files++;
+            node.children.push({ name: entry.name, isDir: false });
+            fileStat.querySelector('b').textContent = counter.files;
+            updateProgress(Math.min(99, Math.round((counter.files / maxFiles) * 100)));
+          }
+        }
+      } catch (e) {
+        // permission or read error — ignore this dir
+      }
+      // sort: dirs first, then files, alphabetical
+      node.children.sort((a, b) => (a.isDir === b.isDir) ? a.name.localeCompare(b.name) : (a.isDir ? -1 : 1));
+      return node;
+    }
+
+    // ---- Build a tree from a FileList (webkitdirectory fallback) ----
+    function buildTreeFromFileList(files, maxFiles, maxDepth, maxSize) {
+      const counter = { files: 0, dirs: 0 };
+      const root = { name: files.length ? (files[0].webkitRelativePath.split('/')[0] || 'root') : 'root', isDir: true, children: [] };
+
+      files.forEach(file => {
+        if (counter.files >= maxFiles) return;
+        if (file.size > maxSize * 1024) return;
+        const parts = file.webkitRelativePath.split('/').slice(1); // drop root
+        if (parts.some(p => p.startsWith('.'))) return;
+        let cur = root;
+        parts.forEach((part, i) => {
+          const isLast = i === parts.length - 1;
+          if (isLast) {
+            cur.children.push({ name: part, isDir: false });
+            counter.files++;
+          } else {
+            let next = cur.children.find(c => c.isDir && c.name === part);
+            if (!next) {
+              next = { name: part, isDir: true, children: [] };
+              cur.children.push(next);
+              counter.dirs++;
+            }
+            cur = next;
+          }
+        });
+      });
+      // recursive sort
+      (function sortNode(n) {
+        n.children.sort((a, b) => (a.isDir === b.isDir) ? a.name.localeCompare(b.name) : (a.isDir ? -1 : 1));
+        n.children.forEach(sortNode);
+      })(root);
+
+      fileStat.querySelector('b').textContent = counter.files;
+      dirStat.querySelector('b').textContent = counter.dirs;
+      return root;
+    }
+
+    // ---- Render tree to ASCII lines ----
+    function renderAscii(node, prefix, isRoot) {
+      const lines = [];
+      if (isRoot) {
+        lines.push(node.name + (node.isDir ? '/' : ''));
+        node.children.forEach(function (child, i) {
+          var last = i === node.children.length - 1;
+          renderNode(child, '', last, lines);
+        });
+      } else {
+        renderNode(node, prefix || '', false, lines);
+      }
+      return lines;
+    }
+
+    function renderNode(node, prefix, isLast, lines) {
+      const connector = isLast ? '└── ' : '├── ';
+      lines.push(prefix + connector + node.name + (node.isDir ? '/' : ''));
+      if (node.isDir) {
+        const childPrefix = prefix + (isLast ? '    ' : '│   ');
+        node.children.forEach(function (child, i) {
+          renderNode(child, childPrefix, i === node.children.length - 1, lines);
+        });
+      }
+    }
+
+    // ---- Animation engine (4 styles + WebM export) ----
+    const FONT = '14px "SFMono-Regular", Consolas, "Liberation Mono", monospace';
+    const LINE_H = 18;
+
+    function lineColor(line) {
+      return line.trim().endsWith('/') ? '#58a6ff' : '#7ee787';
+    }
+
+    function resizeCanvas() {
+      const wrap = canvas.parentElement;
+      const w = wrap.clientWidth - 32; // padding
+      canvas.width = Math.max(400, w);
+      canvas.height = 360;
+    }
+
+    function drawStatic() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.font = FONT;
+      ctx.textBaseline = 'top';
+      state.asciiLines.forEach(function (line, i) {
+        ctx.fillStyle = lineColor(line);
+        ctx.fillText(line, 10, i * LINE_H);
+      });
+    }
+
+    /* ===== Style: CASCADE ===== (lines rain down from top and settle) */
+    function initCascade() {
+      state.drops = state.asciiLines.map(function (line, i) {
+        return {
+          y: -Math.random() * canvas.height,
+          targetY: i * LINE_H,
+          line: line,
+          speed: 0.5 + Math.random() * 1.5
+        };
+      });
+    }
+
+    function animateCascade() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.font = FONT; ctx.textBaseline = 'top';
+      let allSettled = true;
+      state.drops.forEach(function (drop) {
+        const dy = drop.targetY - drop.y;
+        if (Math.abs(dy) > 0.5) { drop.y += dy * 0.06 * state.speed; allSettled = false; }
+        else { drop.y = drop.targetY; }
+        if (drop.y > -LINE_H && drop.y < canvas.height) {
+          ctx.fillStyle = lineColor(drop.line);
+          ctx.fillText(drop.line, 10, drop.y);
+        }
+      });
+      if (allSettled) { finishAnimation(); return; }
+      state.rafId = requestAnimationFrame(animateCascade);
+    }
+
+    /* ===== Style: MATRIX RAIN ===== (individual chars fall in columns) */
+    function initMatrix() {
+      var colW = 8; // approximate char width at 14px mono
+      var cols = Math.ceil(canvas.width / colW);
+      var rows = Math.ceil(canvas.height / LINE_H);
+      // Build character grid from asciiLines (wrap if fewer lines than rows)
+      state.matrixGrid = [];
+      for (var r = 0; r < rows + 10; r++) {
+        var srcLine = state.asciiLines[r % state.asciiLines.length];
+        state.matrixGrid.push(srcLine);
+      }
+      state.matrixCols = [];
+      for (var c = 0; c < cols; c++) {
+        state.matrixCols.push({
+          x: c * colW + 4,
+          y: -Math.random() * canvas.height,
+          speed: (0.5 + Math.random() * 2) * state.speed,
+          chars: state.matrixGrid.map(function (l) { return (l[c] || ' '); }),
+          head: Math.floor(Math.random() * 12)
+        });
+      }
+    }
+
+    function animateMatrix() {
+      // trailing fade effect
+      ctx.fillStyle = 'rgba(13, 17, 23, 0.12)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.font = FONT; ctx.textBaseline = 'top';
+      var done = true;
+      state.matrixCols.forEach(function (col) {
+        col.y += col.speed;
+        if (col.y < canvas.height) done = false;
+        // draw trailing characters
+        for (var i = 0; i < col.chars.length; i++) {
+          var charY = col.y - i * LINE_H;
+          if (charY > -LINE_H && charY < canvas.height) {
+            var ch = col.chars[i];
+            if (ch && ch !== ' ') {
+              if (i === 0) { ctx.fillStyle = '#ffffff'; }        // bright head
+              else if (i < 3) { ctx.fillStyle = '#7ee787'; }     // green trail
+              else { ctx.fillStyle = 'rgba(46, 160, 67, ' + Math.max(0, 0.6 - i * 0.06) + ')'; }
+              ctx.fillText(ch, col.x, charY);
+            }
+          }
+        }
+      });
+      if (done) { finishAnimation(); return; }
+      state.rafId = requestAnimationFrame(animateMatrix);
+    }
+
+    /* ===== Style: TYPEWRITER ===== (lines appear char-by-char sequentially) */
+    function initTypewriter() {
+      state.twLine = 0;
+      state.twChar = 0;
+      state.twDelay = 0;
+    }
+
+    function animateTypewriter() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.font = FONT; ctx.textBaseline = 'top';
+      // draw all fully-revealed lines
+      for (var i = 0; i < state.twLine; i++) {
+        ctx.fillStyle = lineColor(state.asciiLines[i]);
+        ctx.fillText(state.asciiLines[i], 10, i * LINE_H);
+      }
+      // draw current line up to twChar
+      if (state.twLine < state.asciiLines.length) {
+        var cur = state.asciiLines[state.twLine];
+        var partial = cur.substring(0, state.twChar);
+        ctx.fillStyle = lineColor(cur);
+        ctx.fillText(partial, 10, state.twLine * LINE_H);
+        // blinking cursor
+        if (Math.floor(Date.now() / 400) % 2 === 0) {
+          ctx.fillStyle = '#58a6ff';
+          var cx = 10 + ctx.measureText(partial).width;
+          ctx.fillRect(cx, state.twLine * LINE_H + 2, 8, 14);
+        }
+        state.twDelay++;
+        if (state.twDelay >= Math.max(1, Math.floor(4 / state.speed))) {
+          state.twDelay = 0;
+          state.twChar++;
+          if (state.twChar > cur.length) {
+            state.twLine++;
+            state.twChar = 0;
+          }
+        }
+        state.rafId = requestAnimationFrame(animateTypewriter);
+      } else {
+        finishAnimation();
+      }
+    }
+
+    /* ===== Style: REVEAL WIPE ===== (top-down progressive curtain reveal) */
+    function initReveal() {
+      state.revealY = 0;
+    }
+
+    function animateReveal() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.font = FONT; ctx.textBaseline = 'top';
+      // clip to revealed region
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(0, 0, canvas.width, state.revealY);
+      ctx.clip();
+      state.asciiLines.forEach(function (line, i) {
+        ctx.fillStyle = lineColor(line);
+        ctx.fillText(line, 10, i * LINE_H);
+      });
+      ctx.restore();
+      // glowing wipe edge
+      var grad = ctx.createLinearGradient(0, state.revealY - 20, 0, state.revealY + 4);
+      grad.addColorStop(0, 'rgba(88, 166, 255, 0)');
+      grad.addColorStop(1, 'rgba(88, 166, 255, 0.8)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, state.revealY - 20, canvas.width, 24);
+      ctx.fillStyle = '#58a6ff';
+      ctx.fillRect(0, state.revealY, canvas.width, 2);
+
+      state.revealY += 3 * state.speed;
+      if (state.revealY >= canvas.height) { finishAnimation(); return; }
+      state.rafId = requestAnimationFrame(animateReveal);
+    }
+
+    /* ===== Dispatcher ===== */
+    function finishAnimation() {
+      state.playing = false;
+      playBtn.disabled = false;
+      pauseBtn.disabled = true;
+      drawStatic();
+    }
+
+    function animate() {
+      if (!state.playing) return;
+      switch (state.style) {
+        case 'matrix':     animateMatrix();     break;
+        case 'typewriter': animateTypewriter(); break;
+        case 'reveal':     animateReveal();     break;
+        case 'cascade':
+        default:           animateCascade();    break;
+      }
+    }
+
+    function startAnimation() {
+      if (!state.asciiLines.length) return;
+      state.style = animStyleSel.value;
+      cancelAnimationFrame(state.rafId);
+      switch (state.style) {
+        case 'matrix':     initMatrix();     break;
+        case 'typewriter': initTypewriter(); break;
+        case 'reveal':     initReveal();     break;
+        case 'cascade':
+        default:           initCascade();    break;
+      }
+      state.playing = true;
+      playBtn.disabled = true;
+      pauseBtn.disabled = false;
+      animate();
+    }
+
+    function pauseAnimation() {
+      state.playing = false;
+      cancelAnimationFrame(state.rafId);
+      playBtn.disabled = false;
+      pauseBtn.disabled = true;
+    }
+
+    function restartAnimation() {
+      cancelAnimationFrame(state.rafId);
+      startAnimation();
+    }
+
+    /* ===== WebM Recording ===== */
+    function toggleRecording() {
+      if (state.recording) {
+        stopRecording();
+      } else {
+        startRecording();
+      }
+    }
+
+    function startRecording() {
+      if (!state.asciiLines.length) { showToast('⚠️ Load a tree first'); return; }
+      try {
+        var stream = canvas.captureStream(30);
+        var mime = 'video/webm;codecs=vp9';
+        if (!MediaRecorder.isTypeSupported(mime)) mime = 'video/webm;codecs=vp8';
+        if (!MediaRecorder.isTypeSupported(mime)) mime = 'video/webm';
+        state.recorder = new MediaRecorder(stream, { mimeType: mime, videoBitsPerSecond: 2500000 });
+        state.chunks = [];
+        state.recorder.ondataavailable = function (e) { if (e.data.size) state.chunks.push(e.data); };
+        state.recorder.onstop = function () {
+          var blob = new Blob(state.chunks, { type: 'video/webm' });
+          var url = URL.createObjectURL(blob);
+          var a = document.createElement('a');
+          a.href = url;
+          a.download = (state.tree ? state.tree.name : 'fed-etch') + '-animation.webm';
+          a.click();
+          URL.revokeObjectURL(url);
+          showToast('⬇ WebM downloaded!');
+        };
+        state.recorder.start();
+        state.recording = true;
+        recordBtn.innerHTML = '⏹ Stop & Save';
+        recordBtn.classList.add('recording');
+        showToast('🔴 Recording started — play the animation!');
+      } catch (err) {
+        showToast('⚠️ Recording not supported: ' + err.message);
+      }
+    }
+
+    function stopRecording() {
+      if (state.recorder && state.recorder.state !== 'inactive') {
+        state.recorder.stop();
+      }
+      state.recording = false;
+      recordBtn.innerHTML = '⏺ Record WebM';
+      recordBtn.classList.remove('recording');
+    }
+
+    function updateProgress(pct) {
+      progressBar.style.width = pct + '%';
+    }
+
+    function countFiles(node) {
+      let n = 0;
+      (function walk(nd) { if (!nd.isDir) n++; (nd.children || []).forEach(walk); })(node);
+      return n;
+    }
+    function countDirs(node) {
+      let n = 0;
+      (function walk(nd) { if (nd.isDir) n++; (nd.children || []).forEach(walk); })(node);
+      return n;
+    }
+
+    function loadTree(tree) {
+      state.tree = tree;
+      state.fileCount = countFiles(tree);
+      state.dirCount = countDirs(tree);
+      fileStat.querySelector('b').textContent = state.fileCount;
+      dirStat.querySelector('b').textContent = state.dirCount;
+      state.asciiLines = renderAscii(tree, '', true);
+      staticPre.textContent = state.asciiLines.join('\n');
+      staticWrap.style.display = 'block';
+      hint.classList.add('hidden');
+      resizeCanvas();
+      drawStatic();
+      playBtn.disabled = false;
+      restartBtn.disabled = false;
+      clearBtn.disabled = false;
+      recordBtn.disabled = false;
+      pauseBtn.disabled = true;
+      updateProgress(100);
+      setTimeout(function () { progressWrap.classList.remove('active'); }, 400);
+    }
+
+    function clearAll() {
+      cancelAnimationFrame(state.rafId);
+      if (state.recording) stopRecording();
+      state.tree = null;
+      state.asciiLines = [];
+      state.drops = [];
+      state.matrixCols = [];
+      state.matrixGrid = [];
+      state.twLine = 0;
+      state.twChar = 0;
+      state.revealY = 0;
+      state.playing = false;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      staticPre.textContent = '';
+      staticWrap.style.display = 'none';
+      hint.classList.remove('hidden');
+      fileStat.querySelector('b').textContent = '0';
+      dirStat.querySelector('b').textContent = '0';
+      updateProgress(0);
+      playBtn.disabled = true;
+      pauseBtn.disabled = true;
+      restartBtn.disabled = true;
+      clearBtn.disabled = true;
+      recordBtn.disabled = true;
+    }
+
+    // ---- Event wiring ----
+    scanBtn.addEventListener('click', async function () {
+      if (window.showDirectoryPicker) {
+        try {
+          const handle = await window.showDirectoryPicker();
+          progressWrap.classList.add('active');
+          updateProgress(5);
+          const maxFiles = parseInt(cfgMaxFiles.value, 10) || 500;
+          const maxDepth = parseInt(cfgMaxDepth.value, 10) || 15;
+          const maxSize  = parseInt(cfgMaxSize.value, 10)  || 50;
+          const counter = { files: 0, dirs: 0 };
+          const tree = await buildTreeFromHandle(handle, 0, maxDepth, maxFiles, maxSize, counter);
+          loadTree(tree);
+          showToast('✅ Folder scanned!');
+        } catch (err) {
+          progressWrap.classList.remove('active');
+          if (err.name !== 'AbortError') showToast('⚠️ Scan failed: ' + err.message);
+        }
+      } else {
+        folderInput.click();
+      }
+    });
+
+    folderInput.addEventListener('change', function (e) {
+      const files = Array.from(e.target.files || []);
+      if (!files.length) return;
+      progressWrap.classList.add('active');
+      updateProgress(20);
+      const maxFiles = parseInt(cfgMaxFiles.value, 10) || 500;
+      const maxDepth = parseInt(cfgMaxDepth.value, 10) || 15;
+      const maxSize  = parseInt(cfgMaxSize.value, 10)  || 50;
+      setTimeout(function () {
+        const tree = buildTreeFromFileList(files, maxFiles, maxDepth, maxSize);
+        loadTree(tree);
+        showToast('✅ Folder scanned!');
+      }, 60);
+    });
+
+    demoBtn.addEventListener('click', function () {
+      progressWrap.classList.add('active');
+      updateProgress(50);
+      setTimeout(function () {
+        loadTree(JSON.parse(JSON.stringify(DEMO_REPO)));
+        showToast('✨ Demo Mode loaded!');
+      }, 120);
+    });
+
+    playBtn.addEventListener('click', startAnimation);
+    pauseBtn.addEventListener('click', pauseAnimation);
+    restartBtn.addEventListener('click', restartAnimation);
+    clearBtn.addEventListener('click', clearAll);
+
+    copyAsciiBtn.addEventListener('click', function () {
+      copyText(state.asciiLines.join('\n'), 'ASCII tree');
+    });
+    downloadBtn.addEventListener('click', function () {
+      if (!state.asciiLines.length) return;
+      const blob = new Blob([state.asciiLines.join('\n')], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = (state.tree ? state.tree.name : 'tree') + '.txt';
+      a.click();
+      URL.revokeObjectURL(a.href);
+      showToast('⬇ Downloaded .txt!');
+    });
+
+    speedSlider.addEventListener('input', function () {
+      state.speed = parseInt(speedSlider.value, 10);
+      speedVal.textContent = state.speed + '×';
+      localStorage.setItem('fed-etch-speed', String(state.speed));
+    });
+
+    animStyleSel.addEventListener('change', function () {
+      state.style = animStyleSel.value;
+      localStorage.setItem('fed-etch-style', state.style);
+      if (state.asciiLines.length) drawStatic();
+    });
+
+    recordBtn.addEventListener('click', toggleRecording);
+
+    window.addEventListener('resize', function () {
+      if (state.asciiLines.length) { resizeCanvas(); drawStatic(); }
+    });
+
+    return { init: resizeCanvas };
+  })();
+
+  /* ======================================================================
+     SECTION 3 — Tab switching & init
+     ====================================================================== */
+  function switchTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(function (el) { el.classList.remove('active'); });
+    document.querySelectorAll('.header nav button').forEach(function (el) { el.classList.remove('active'); });
+    document.getElementById('tab-' + tabId).classList.add('active');
+    const btn = document.querySelector('.header nav button[data-tab="' + tabId + '"]');
+    if (btn) btn.classList.add('active');
+    if (tabId === 'studio') ASCII.init();
+  }
+  document.querySelectorAll('.header nav button').forEach(function (btn) {
+    btn.addEventListener('click', function () { switchTab(btn.dataset.tab); });
+  });
+
+  // ===== Init =====
+  generateAll();
+  ASCII.init();
+</script>
+</body>
+</html>

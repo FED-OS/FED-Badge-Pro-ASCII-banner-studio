@@ -1,0 +1,153 @@
+# ⚡ FED‑Badge Pro
+
+**The all‑in‑one badge & ASCII banner studio for your GitHub README.**
+
+Generate beautiful badges from **six services** — Shields.io, Badgen, Badges.ws, BadgeWind, Raw SVG, and GitHub Actions — then turn your project folder into animated ASCII art with the built‑in **FED‑ETCH** studio. Four animation styles, WebM video export, everything runs in your browser. No server, no install, no dependencies.
+
+[![FED‑Badge](https://img.shields.io/badge/FED--Badge-v3.1-0052cc?style=flat&labelColor=24292e)](https://github.com/FED-OS)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![Made with HTML](https://img.shields.io/badge/Made%20with-HTML%20CSS%20JS-238636?style=flat&labelColor=161b22)](#)
+
+---
+
+## ✨ What's New in v3.1
+
+FED‑Badge v3.1 supercharges the FED‑ETCH ASCII Studio with **four animation styles** and **WebM video export**. Choose between Cascade, Matrix Rain, Typewriter, and Reveal Wipe from the new Animation dropdown, then record the result directly to a `.webm` file you can embed in any README or share anywhere. This release also adds a complete set of GitHub community files — Code of Conduct, issue templates, PR template, GitHub Pages deployment workflow, and a social preview image.
+
+---
+
+## 🎛️ Features
+
+- **🎨 Six badge services** — Shields.io, Badgen.net, Badges.ws, BadgeWind, Raw SVG, GitHub Actions, all rendered side‑by‑side.
+- **🎯 Preset library** — load popular badges instantly (GitHub Sponsors, Ko‑fi, FED‑OS, Build Passing, License, Version, and more).
+- **📋 One‑click copy** — copy HTML (the exact format that renders in GitHub READMEs), standard Markdown, or the raw URL / SVG.
+- **📦 Bulk export** — copy every badge at once as HTML or Markdown.
+- **🖥️ FED‑ETCH ASCII Studio** — scan a local folder, render an animated ASCII tree, export static ASCII or WebM video.
+- **🎬 Four animation styles** — Cascade, Matrix Rain, Typewriter, and Reveal Wipe.
+- **⏺️ WebM video export** — record the canvas animation to a downloadable `.webm` file using MediaRecorder + `canvas.captureStream()`.
+- **▶️ Animation controls** — Play, Pause, Restart, and a speed slider.
+- **💾 Persistence** — your speed, animation style, and theme preferences are saved in localStorage.
+- **📖 Built‑in docs** — quick reference for every service and the ASCII studio.
+- **🖥️ Fully offline** — runs entirely in your browser, no backend required.
+
+---
+
+## 🚀 Quick Start
+
+1. **Download** or clone this repository.
+2. **Open** `index.html` in any modern browser.
+3. **Pick a preset** or fill in your own label, message, and colours.
+4. **Copy** the HTML or Markdown snippet from any badge card.
+5. **Paste** into your `README.md` or website.
+
+That's it. No installation, no dependencies, no build step.
+
+---
+
+## 🧪 FED‑ETCH ASCII Studio
+
+The ASCII Studio tab lets you turn your project into animated art:
+
+1. Click **Scan Folder** and pick any directory on your computer (Chrome / Edge) — or use the folder picker fallback (Firefox / Safari).
+2. The studio reads your file structure and renders an ASCII tree with proper box‑drawing characters.
+3. Choose an **Animation style** from the dropdown:
+   - **Cascade** — lines rain down from the top and ease into their final positions.
+   - **Matrix Rain** — characters fall in vertical columns with a trailing fade and bright white heads.
+   - **Typewriter** — lines appear character‑by‑character with a blinking cursor.
+   - **Reveal Wipe** — a top‑down progressive curtain reveal with a glowing blue edge.
+4. Hit **Play** to watch the tree animate.
+5. Adjust the **Speed** slider to taste.
+6. Click **⏺ Record WebM** before playing to capture the animation as a video file — click **⏹ Stop & Save** when done to download.
+7. Click **Copy ASCII** to grab the static tree, or **Download .txt** to save it as text.
+
+Don't have a folder handy? Click **Demo Mode** to load a built‑in mock repository and see exactly how it works.
+
+---
+
+## 📦 Badge Services Supported
+
+| Service | URL Pattern | Notes |
+| :--- | :--- | :--- |
+| **Shields.io** | `https://img.shields.io/badge/...` | Full parameter support (style, logo, label colour, cache, links). |
+| **Badgen.net** | `https://badgen.net/badge/...` | Simple and fast. |
+| **Badges.ws** | `https://badges.ws/badge/...` | Supports style via query string. |
+| **BadgeWind** | `https://badgewind.vercel.app/...` | Tailwind‑styled badges. |
+| **Raw SVG** | Self‑contained `<svg>` | No external requests — works offline. |
+| **GitHub Actions** | `https://github.com/owner/repo/actions/workflows/.../badge.svg` | Native workflow status. |
+
+---
+
+## 🛠️ Usage Examples
+
+### HTML — the format that renders in GitHub READMEs
+```html
+<a href='https://fedpromptly.com' target='_blank'>
+    <img height='36' style='border:0px;height:36px;' src='https://img.shields.io/badge/FED--OS-Active-0052cc?style=flat&labelColor=24292e' border='0' alt='FED-OS: Active' />
+</a>
+```
+
+### Markdown
+```markdown
+[![FED-OS: Active](https://img.shields.io/badge/FED--OS-Active-0052cc?style=flat&labelColor=24292e)](https://fedpromptly.com)
+```
+
+### GitHub Actions Workflow Badge
+```html
+<a href='https://github.com/Fedpromptly/demo-repository/actions/workflows/ci.yml' target='_blank'>
+    <img height='36' style='border:0px;height:36px;' src='https://github.com/Fedpromptly/demo-repository/actions/workflows/ci.yml/badge.svg' border='0' alt='CI Status' />
+</a>
+```
+
+---
+
+## 📁 Project Structure
+
+```
+FED-Badge/
+├── index.html              # Main app — Generator, Presets, ASCII Studio, Docs
+├── styles.css              # Primer-inspired dark theme stylesheet
+├── README.md               # You are here
+├── CHANGELOG.md            # Version history
+├── CONTRIBUTING.md         # How to contribute
+├── LICENSE                 # Full MIT license text
+├── LICENSE.md              # MIT badge + summary
+├── SECURITY.md             # Vulnerability reporting policy
+├── .gitignore              # Ignored files
+└── .github/
+    ├── FUNDING.yml                 # Sponsor buttons (Ko-fi, GitHub Sponsors, custom links)
+    ├── CODE_OF_CONDUCT.md          # Contributor Covenant 2.1
+    ├── PULL_REQUEST_TEMPLATE.md    # PR template with checklist
+    ├── ISSUE_TEMPLATE/
+    │   ├── bug_report.md           # Structured bug report form
+    │   └── feature_request.md      # Feature request form
+    ├── workflows/
+    │   └── deploy.yml              # GitHub Pages deployment workflow
+    └── social-preview.svg          # 1280×640 Open Graph image
+```
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for the full workflow — fork, branch, commit, push, and open a pull request against `main`. Please follow our [Code of Conduct](.github/CODE_OF_CONDUCT.md) in all interactions.
+
+---
+
+## 💖 Support This Project
+
+If FED‑Badge saves you time, consider supporting us:
+
+- **GitHub Sponsors:** [github.com/sponsors/FED-OS](https://github.com/sponsors/FED-OS)
+- **Ko‑fi:** [ko-fi.com/fedpromptly](https://ko-fi.com/fedpromptly)
+- **Forum:** [fedpromptly.com/forum](https://www.fedpromptly.com/forum)
+
+---
+
+## 📄 License
+
+FED‑Badge is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for the full text, or [LICENSE.md](LICENSE.md) for a quick summary.
+
+---
+
+⚡ **FED‑Badge Pro** · Built for GitHub · Badges + ASCII art, all in one place.
