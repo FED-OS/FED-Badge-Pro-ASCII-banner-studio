@@ -1,0 +1,3 @@
+1077:    speedSlider.addEventListener('input', function () {
+1083:    window.addEventListener('resize', function () {
+1087:    return { init: resizeCanvas };

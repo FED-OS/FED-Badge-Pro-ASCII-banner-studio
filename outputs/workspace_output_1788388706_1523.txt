@@ -1,0 +1,2 @@
+-rw-r--r-- 1 root root 36825 Sep  2 22:37 index.html
+-rw-r--r-- 1 root root 10505 Sep  2 22:35 styles.css

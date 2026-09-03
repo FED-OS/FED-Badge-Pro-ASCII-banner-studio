@@ -1,0 +1,10 @@
+119:      <div class="studio-controls">
+120:        <div class="speed-wrap">
+121:          <label for="speedSlider">Speed</label>
+122:          <input type="range" id="speedSlider" min="1" max="20" value="8" />
+504:    const speedSlider  = document.getElementById('speedSlider');
+513:    if (!isNaN(savedSpeed)) { speedSlider.value = savedSpeed; }
+514:    speedVal.textContent = speedSlider.value + '×';
+524:      speed: parseInt(speedSlider.value, 10)
+860:    speedSlider.addEventListener('input', function () {
+861:      state.speed = parseInt(speedSlider.value, 10);

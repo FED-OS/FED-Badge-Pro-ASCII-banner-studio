@@ -1,0 +1,3 @@
+510:    const restartBtn   = document.getElementById('restartBtn');
+511:    const clearBtn     = document.getElementById('clearBtn');
+514:    const speedSlider  = document.getElementById('speedSlider');

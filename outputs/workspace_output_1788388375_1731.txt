@@ -1,0 +1,90 @@
+=== CONTRIBUTING.md ===
+# Contributing to FED‑Badge
+
+Thank you for considering contributing! We welcome all types of contributions – bug reports, feature requests, documentation improvements, and code patches.
+
+## How to Contribute
+
+1. **Fork** the repository.
+2. **Clone** your fork:
+   ```bash
+   git clone https://github.com/your-username/fed-badge.git
+
+=== LICENSE (first/last) ===
+Creative Commons Legal Code
+
+CC0 1.0 Universal
+
+    CREATIVE COMMONS CORPORATION IS NOT A LAW FIRM AND DOES NOT PROVIDE
+...
+    consents, permissions or other rights required for any use of the
+    Work.
+ d. Affirmer understands and acknowledges that Creative Commons is not a
+    party to this document and has no duty or obligation with respect to
+    this CC0 or use of the Work.
+
+=== LICENSE.md ===
+MIT License
+
+Copyright (c) 2026 FED-OS / Fedpromptly
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+=== SECURITY.md ===
+# Security Policy
+
+## Supported Versions
+
+We actively support the latest version of FED‑Badge. Security updates are applied to the `main` branch.
+
+| Version | Supported |
+| :--- | :--- |
+| Latest (2.x) | ✅ |
+| 1.x | ❌ |
+
+## Reporting a Vulnerability
+
+We take security seriously. If you discover a vulnerability, please do **not** open a public issue.
+
+Instead, please email us directly at:
+
+📧 **security@fedpromptly.com**
+
+Or use the **"Report a vulnerability"** button on the Security tab of this repository (draft a security advisory).
+
+### What to include
+- A clear description of the vulnerability.
+- Steps to reproduce it.
+- The impact and potential exploit.
+- Any suggested fix (optional).
+
+### Response timeline
+- We will acknowledge your report within **48 hours**.
+- We will work on a fix and aim to release it within **7 days** (depending on severity).
+- We will credit you in the release notes unless you prefer to remain anonymous.
+
+Thank you for helping keep FED‑Badge secure!
+
+## Disclosure Policy
+
+We follow responsible disclosure. Once a fix is released, we will publicly disclose the issue in the changelog.
+
+## Contact
+
+For non‑security issues, please use GitHub Discussions or open a regular issue.

@@ -1,0 +1,162 @@
+=== README.md ===
+# ⚡ FED‑Badge Pro
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/W3T61ZU5FS)
+
+**One‑click badge studio for your GitHub README.**  
+Generate badges from **Shields.io, Badgen, Badges.ws, BadgeWind, Raw SVG, and GitHub Actions** – all in one clean interface.
+
+[![FED‑Badge](https://img.shields.io/badge/FED--Badge-v2.0-0052cc?style=flat&labelColor=24292e)](https://github.com/Fedpromptly/fed-badge)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+
+---
+
+[![1787528795.png](https://s8d8.turboimg.net/sp/9d961d165fc5a9c79204ac24d6a9529f/1787528795.png)](https://www.turboimagehost.com/p/126958352/1787528795.png.html)
+
+## ✨ Features
+
+- **🎯 Preset library** – load popular badges instantly (GitHub Sponsors, Patreon, Ko‑fi, FED‑OS, etc.)
+- **🔧 All badge services** – Shields.io, Badgen.net, Badges.ws, BadgeWind, Raw SVG, GitHub Actions
+- **📋 One‑click copy** – copy HTML (works in GitHub READMEs) or standard Markdown
+- **📦 Bulk export** – copy all badges at once (HTML or Markdown)
+- **🎨 Live preview** – see your badge as you edit
+- **📖 Built‑in docs** – quick reference for every service
+- **🧩 Fully offline** – runs entirely in your browser, no server required
+
+---
+
+## 🚀 Quick Start
+
+1. **Open** `index.html` in your browser.
+2. **Pick a preset** or fill in your own label, message, and colours.
+3. **Copy** the HTML or Markdown snippet from any badge card.
+4. **Paste** into your `README.md` or website.
+
+That’s it. No installation, no dependencies.
+
+---
+
+## 📸 Screenshots
+
+*(Add your own screenshots here – the tool generates a clean dark‑themed UI.)*
+
+---
+
+## 📦 Services Supported
+
+| Service | URL Pattern | Notes |
+| :--- | :--- | :--- |
+| **Shields.io** | `https://img.shields.io/badge/...` | Full parameter support (style, logo, label colour, cache, links). |
+| **Badgen.net** | `https://badgen.net/badge/...` | Simple and fast. |
+| **Badges.ws** | `https://badges.ws/badge/...` | Supports style via query. |
+| **BadgeWind** | `https://badgewind.vercel.app/...` | Tailwind‑styled badges. |
+| **Raw SVG** | Self‑contained `<svg>` | No external requests – works offline. |
+| **GitHub Actions** | `https://github.com/owner/repo/actions/workflows/.../badge.svg` | Native workflow status. |
+
+---
+
+<svg xmlns="http://www.w3.org/2000/svg" width="110" height="20" role="img">
+  ...
+</svg>
+
+[![FED-OS: Active](https://img.shields.io/badge/FED--OS-Active-0052cc?style=flat&labelColor=24292e)](https://fedpromptly.com)
+
+## 🛠️ Usage Examples
+
+### HTML (works in GitHub READMEs)
+```html
+<a href='https://fedpromptly.com' target='_blank'>
+    <img height='36' style='border:0px;height:36px;' src='https://img.shields.io/badge/FED--OS-Active-0052cc?style=flat&labelColor=24292e' border='0' alt='FED-OS: Active' />
+</a>
+
+
+=== CHANGELOG.md ===
+
+---
+
+## 📄 CHANGELOG.md
+
+```markdown
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [2.0.0] – 2026-08-23
+
+### Added
+- Full GitHub‑style UI with tabs (Generator, Presets, Docs).
+- Support for all badge services: Shields.io, Badgen.net, Badges.ws, BadgeWind, Raw SVG, GitHub Actions.
+- One‑click copy for HTML, Markdown, and raw output.
+- Copy All (HTML and Markdown) buttons.
+- Preset library with 12+ common badges.
+- Built‑in documentation tab.
+- Responsive design – works on all screen sizes.
+
+### Changed
+- Complete rewrite of the UI – now uses Primer‑inspired dark theme.
+- Output now includes both HTML and Markdown formats for every badge.
+
+### Fixed
+- Raw SVG now correctly previews and copies the complete SVG code.
+- GitHub Actions badge now generates the exact URL format that works.
+
+## [1.0.0] – 2026-08-20
+
+### Added
+- Initial release with Shields.io and Badgen support.
+- Basic input form and live preview.
+- Copy‑to‑clipboard functionality.
+
+=== FUNDING.yml ===
+# Funding options for this repository
+
+# GitHub Sponsors (organisation or user)
+github: [FED-OS]
+
+# Ko-fi (username)
+ko_fi: fedpromptly
+
+# Custom links (displayed as a dropdown under "Custom" on the repo sidebar)
+custom:
+  - https://www.fedpromptly.com/forum
+  - https://github.com/Fedpromptly
+  - https://github.com/FED-OS
+  - https://github.com/FED-OS?tab=repositories
+
+=== .gitignore ===
+# OS metadata
+.DS_Store
+Thumbs.db
+*.tmp
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-*
+
+# Build / dependency folders (if you ever add them)
+node_modules/
+dist/
+build/
+*.log
+
+# Environment / secrets
+.env
+.env.local
+*.pem
+*.key
+
+# Backup / temp files
+*.bak
+*.old
+*.orig
+
+# The tool is a single HTML file – no build needed.
+# If you add screenshots or other assets, you may want to keep them.
+# Add any sensitive files here.

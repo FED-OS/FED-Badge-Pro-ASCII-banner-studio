@@ -1,0 +1,15 @@
+263:.studio-btn {
+277:.studio-btn:hover { background: #2ea043; }
+278:.studio-btn.secondary { background: #30363d; color: #c9d1d9; }
+279:.studio-btn.secondary:hover { background: #484f58; }
+280:.studio-btn.warn { background: #da3633; }
+281:.studio-btn.warn:hover { background: #f85149; }
+282:.studio-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+284:.studio-controls {
+295:.studio-controls label { margin-bottom: 0; }
+296:.studio-controls .speed-wrap { display: flex; align-items: center; gap: 8px; }
+297:.studio-controls input[type="range"] {
+301:.studio-controls .speed-val {
+307:.studio-controls .stat {
+311:.studio-controls .stat b { color: #f0f6fc; }
+445:  .studio-controls { gap: 10px; }

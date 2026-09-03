@@ -1,0 +1,161 @@
+          renderNode(child, childPrefix, i === node.children.length - 1, lines);
+        });
+      }
+    }
+
+    // ---- Cascade animation ----
+    const FONT = '14px "SFMono-Regular", Consolas, "Liberation Mono", monospace';
+    const LINE_H = 18;
+
+    function initDrops() {
+      state.drops = state.asciiLines.map(function (line, i) {
+        return {
+          y: -Math.random() * canvas.height,
+          targetY: i * LINE_H,
+          line: line,
+          speed: 0.5 + Math.random() * 1.5
+        };
+      });
+    }
+
+    function resizeCanvas() {
+      const wrap = canvas.parentElement;
+      const w = wrap.clientWidth - 32; // padding
+      canvas.width = Math.max(400, w);
+      canvas.height = 360;
+    }
+
+    function drawStatic() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.font = FONT;
+      ctx.textBaseline = 'top';
+      state.asciiLines.forEach(function (line, i) {
+        const y = i * LINE_H;
+        ctx.fillStyle = line.trim().endsWith('/') ? '#58a6ff' : '#7ee787';
+        ctx.fillText(line, 10, y);
+      });
+    }
+
+    function animate() {
+      if (!state.playing) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.font = FONT;
+      ctx.textBaseline = 'top';
+
+      let allSettled = true;
+      state.drops.forEach(function (drop) {
+        const dy = drop.targetY - drop.y;
+        if (Math.abs(dy) > 0.5) {
+          drop.y += dy * 0.06 * state.speed;
+          allSettled = false;
+        } else {
+          drop.y = drop.targetY;
+        }
+        if (drop.y > -LINE_H && drop.y < canvas.height) {
+          ctx.fillStyle = drop.line.trim().endsWith('/') ? '#58a6ff' : '#7ee787';
+          ctx.fillText(drop.line, 10, drop.y);
+        }
+      });
+
+      if (allSettled) {
+        state.playing = false;
+        playBtn.disabled = false;
+        pauseBtn.disabled = true;
+        drawStatic();
+        return;
+      }
+      state.rafId = requestAnimationFrame(animate);
+    }
+
+    function startAnimation() {
+      if (!state.asciiLines.length) return;
+      initDrops();
+      state.playing = true;
+      playBtn.disabled = true;
+      pauseBtn.disabled = false;
+      cancelAnimationFrame(state.rafId);
+      animate();
+    }
+
+    function pauseAnimation() {
+      state.playing = false;
+      cancelAnimationFrame(state.rafId);
+      playBtn.disabled = false;
+      pauseBtn.disabled = true;
+    }
+
+    function restartAnimation() {
+      cancelAnimationFrame(state.rafId);
+      startAnimation();
+    }
+
+    function updateProgress(pct) {
+      progressBar.style.width = pct + '%';
+    }
+
+    function countFiles(node) {
+      let n = 0;
+      (function walk(nd) { if (!nd.isDir) n++; (nd.children || []).forEach(walk); })(node);
+      return n;
+    }
+    function countDirs(node) {
+      let n = 0;
+      (function walk(nd) { if (nd.isDir) n++; (nd.children || []).forEach(walk); })(node);
+      return n;
+    }
+
+    function loadTree(tree) {
+      state.tree = tree;
+      state.fileCount = countFiles(tree);
+      state.dirCount = countDirs(tree);
+      fileStat.querySelector('b').textContent = state.fileCount;
+      dirStat.querySelector('b').textContent = state.dirCount;
+      state.asciiLines = renderAscii(tree, '', true);
+      staticPre.textContent = state.asciiLines.join('\n');
+      staticWrap.style.display = 'block';
+      hint.classList.add('hidden');
+      resizeCanvas();
+      drawStatic();
+      playBtn.disabled = false;
+      restartBtn.disabled = false;
+      clearBtn.disabled = false;
+      pauseBtn.disabled = true;
+      updateProgress(100);
+      setTimeout(function () { progressWrap.classList.remove('active'); }, 400);
+    }
+
+    function clearAll() {
+      cancelAnimationFrame(state.rafId);
+      state.tree = null;
+      state.asciiLines = [];
+      state.drops = [];
+      state.playing = false;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      staticPre.textContent = '';
+      staticWrap.style.display = 'none';
+      hint.classList.remove('hidden');
+      fileStat.querySelector('b').textContent = '0';
+      dirStat.querySelector('b').textContent = '0';
+      updateProgress(0);
+      playBtn.disabled = true;
+      pauseBtn.disabled = true;
+      restartBtn.disabled = true;
+      clearBtn.disabled = true;
+    }
+
+    // ---- Event wiring ----
+    scanBtn.addEventListener('click', async function () {
+      if (window.showDirectoryPicker) {
+        try {
+          const handle = await window.showDirectoryPicker();
+          progressWrap.classList.add('active');
+          updateProgress(5);
+          const maxFiles = parseInt(cfgMaxFiles.value, 10) || 500;
+          const maxDepth = parseInt(cfgMaxDepth.value, 10) || 15;
+          const maxSize  = parseInt(cfgMaxSize.value, 10)  || 50;
+          const counter = { files: 0, dirs: 0 };
+          const tree = await buildTreeFromHandle(handle, 0, maxDepth, maxFiles, maxSize, counter);
+          loadTree(tree);
+          showToast('✅ Folder scanned!');
+        } catch (err) {
+          progressWrap.classList.remove('active');

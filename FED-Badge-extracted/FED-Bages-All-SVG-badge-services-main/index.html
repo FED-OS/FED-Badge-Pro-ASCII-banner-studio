@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FED‑Badge Pro · GitHub‑Style Badge Studio</title>
+  <style>
+    /* ===== Primer‑inspired dark theme ===== */
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+      background: #0d1117;
+      color: #c9d1d9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    a { color: #58a6ff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Header */
+    .header {
+      background: #161b22;
+      border-bottom: 1px solid #30363d;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .header h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #f0f6fc;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .header h1 small {
+      font-size: 1rem;
+      font-weight: normal;
+      color: #8b949e;
+    }
+    .header .badge-version {
+      background: #30363d;
+      color: #c9d1d9;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .header nav {
+      display: flex;
+      gap: 8px;
+    }
+    .header nav button {
+      background: transparent;
+      border: 1px solid transparent;
+      color: #8b949e;
+      padding: 6px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .header nav button:hover {
+      color: #f0f6fc;
+      background: #21262d;
+    }
+    .header nav button.active {
+      color: #f0f6fc;
+      border-color: #f0f6fc;
+      background: #0d1117;
+    }
+
+    /* Main */
+    .main {
+      flex: 1;
+      padding: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Tabs content */
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+
+    /* Panels */
+    .panel {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 10px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+    .panel h2 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #f0f6fc;
+      margin: 0 0 16px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .panel h2 .badge-count {
+      font-size: 0.8rem;
+      font-weight: normal;
+      color: #8b949e;
+    }
+
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    @media (max-width: 700px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+    label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #8b949e;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      margin-bottom: 4px;
+    }
+    select, input {
+      width: 100%;
+      padding: 8px 12px;
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      color: #f0f6fc;
+      font-size: 0.95rem;
+      margin-bottom: 12px;
+    }
+    select:focus, input:focus { border-color: #58a6ff; outline: none; }
+    select { cursor: pointer; }
+
+    .color-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .color-row input[type="color"] {
+      width: 36px;
+      height: 36px;
+      padding: 2px;
+      border-radius: 6px;
+      background: #0d1117;
+      border: 1px solid #30363d;
+      cursor: pointer;
+    }
+    .color-row input[type="text"] { flex: 1; }
+
+    .preset-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+    .preset-btn {
+      background: #21262d;
+      border: 1px solid #30363d;
+      color: #c9d1d9;
+      padding: 4px 14px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .preset-btn:hover {
+      background: #30363d;
+      border-color: #58a6ff;
+      color: #f0f6fc;
+    }
+
+    /* Badge Grid */
+    .badge-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 10px;
+    }
+    .badge-card {
+      background: #0d1117;
+      border: 1px solid #21262d;
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.2s;
+    }
+    .badge-card:hover { border-color: #58a6ff; }
+    .badge-card .service-name {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #8b949e;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      margin-bottom: 8px;
+    }
+    .badge-card .preview {
+      background: #070a0e;
+      border: 1px solid #21262d;
+      border-radius: 6px;
+      padding: 12px;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+    .badge-card .preview img { max-height: 36px; }
+    .badge-card .preview svg { max-height: 36px; }
+    .badge-card .output {
+      background: #0d1117;
+      border: 1px solid #21262d;
+      border-radius: 4px;
+      padding: 6px 8px;
+      font-family: monospace;
+      font-size: 0.7rem;
+      color: #7ee787;
+      word-break: break-all;
+      max-height: 60px;
+      overflow-y: auto;
+      margin-bottom: 8px;
+    }
+    .badge-card .btn-group {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+    }
+    .badge-card .btn {
+      background: #30363d;
+      border: none;
+      color: #c9d1d9;
+      padding: 4px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.7rem;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .badge-card .btn:hover { background: #484f58; }
+    .badge-card .btn-copy { background: #238636; color: white; }
+    .badge-card .btn-copy:hover { background: #2ea043; }
+    .badge-card .btn-markdown { background: #1f6feb; color: white; }
+    .badge-card .btn-markdown:hover { background: #388bfd; }
+
+    /* Copy All */
+    .copy-all-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 20px 0 10px 0;
+      justify-content: center;
+    }
+    .copy-all-btn {
+      background: #1f6feb;
+      border: none;
+      color: white;
+      padding: 8px 24px;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .copy-all-btn:hover { background: #388bfd; }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #238636;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: 600;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+    .toast.show { opacity: 1; }
+
+    /* Docs */
+    .docs-section {
+      margin-bottom: 24px;
+    }
+    .docs-section h3 {
+      color: #f0f6fc;
+      margin-bottom: 8px;
+    }
+    .docs-section code {
+      background: #0d1117;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: #7ee787;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 20px;
+      border-top: 1px solid #30363d;
+      color: #8b949e;
+      font-size: 0.85rem;
+      margin-top: 30px;
+    }
+
+    /* Responsive tweaks */
+    @media (max-width: 600px) {
+      .header { flex-direction: column; align-items: stretch; }
+      .header nav { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header">
+  <h1>
+    ⚡ FED‑Badge
+    <small>Pro</small>
+    <span class="badge-version">v2.0</span>
+  </h1>
+  <nav>
+    <button class="active" data-tab="generator">Generator</button>
+    <button data-tab="presets">Presets</button>
+    <button data-tab="docs">Docs</button>
+  </nav>
+</header>
+
+<!-- ===== MAIN ===== -->
+<div class="main">
+
+  <!-- ===== TAB: GENERATOR ===== -->
+  <div class="tab-content active" id="tab-generator">
+    <div class="panel">
+      <h2>🎛️ Badge Controls</h2>
+      <div class="grid-2">
+        <div>
+          <label>Target Link (href)</label>
+          <input type="text" id="linkUrl" value="https://fedpromptly.com" placeholder="https://...">
+        </div>
+        <div>
+          <label>Style (optional)</label>
+          <input type="text" id="styleInput" value="flat" placeholder="flat, for-the-badge, social">
+        </div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <label>Left Label</label>
+          <input type="text" id="leftText" value="FED-OS" placeholder="e.g. FED-OS">
+        </div>
+        <div>
+          <label>Right Status</label>
+          <input type="text" id="rightText" value="Active" placeholder="e.g. Active">
+        </div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <label>Right Color</label>
+          <div class="color-row">
+            <input type="color" id="colorPicker" value="#0052cc" />
+            <input type="text" id="rightColor" value="0052cc" placeholder="hex">
+          </div>
+        </div>
+        <div>
+          <label>Label Color</label>
+          <div class="color-row">
+            <input type="color" id="labelColorPicker" value="#24292e" />
+            <input type="text" id="leftColor" value="24292e" placeholder="hex">
+          </div>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div>
+          <label>Repository (for GitHub Actions)</label>
+          <input type="text" id="repoInput" value="Fedpromptly/demo-repository" placeholder="owner/repo">
+        </div>
+        <div>
+          <label>Workflow Filename (for Actions)</label>
+          <input type="text" id="workflowInput" value="ci.yml" placeholder="e.g. ci.yml">
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== BADGE GRID ===== -->
+    <div class="badge-grid" id="badgeGrid"></div>
+
+    <!-- ===== COPY ALL ===== -->
+    <div class="copy-all-row">
+      <button class="copy-all-btn" id="copyAllHtmlBtn">📋 Copy All HTML</button>
+      <button class="copy-all-btn" id="copyAllMarkdownBtn">📝 Copy All Markdown</button>
+    </div>
+  </div>
+
+  <!-- ===== TAB: PRESETS ===== -->
+  <div class="tab-content" id="tab-presets">
+    <div class="panel">
+      <h2>📌 Quick Presets</h2>
+      <p style="color:#8b949e;">Click any preset to load it into the generator. You can then tweak and copy.</p>
+      <div class="preset-group" style="gap:10px;">
+        <button class="preset-btn" onclick="applyPreset('fedos')">FED-OS</button>
+        <button class="preset-btn" onclick="applyPreset('dpromptly')">DPromptly</button>
+        <button class="preset-btn" onclick="applyPreset('embeddable')">Embeddable</button>
+        <button class="preset-btn" onclick="applyPreset('community')">Discord</button>
+        <button class="preset-btn" onclick="applyPreset('github-sponsors')">GitHub Sponsors</button>
+        <button class="preset-btn" onclick="applyPreset('patreon')">Patreon</button>
+        <button class="preset-btn" onclick="applyPreset('buymeacoffee')">Buy Me A Coffee</button>
+        <button class="preset-btn" onclick="applyPreset('kofi')">Ko-fi</button>
+        <button class="preset-btn" onclick="applyPreset('build-passing')">Build Passing</button>
+        <button class="preset-btn" onclick="applyPreset('coverage')">Coverage 100%</button>
+        <button class="preset-btn" onclick="applyPreset('license')">MIT License</button>
+        <button class="preset-btn" onclick="applyPreset('version')">Version v1.0</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TAB: DOCS ===== -->
+  <div class="tab-content" id="tab-docs">
+    <div class="panel">
+      <h2>📖 Documentation</h2>
+      <div class="docs-section">
+        <h3>How It Works</h3>
+        <p>FED‑Badge generates badges using multiple services. Fill in the controls and copy the output that works best for you.</p>
+      </div>
+      <div class="docs-section">
+        <h3>Services</h3>
+        <ul style="list-style:none; padding-left:0;">
+          <li><strong>Shields.io</strong> – Full-featured, supports logos, style, label colour, cache, links.</li>
+          <li><strong>Badgen.net</strong> – Simple and fast, no extra parameters.</li>
+          <li><strong>Badges.ws</strong> – Similar to Badgen, supports style.</li>
+          <li><strong>BadgeWind</strong> – Tailwind‑styled badges via API.</li>
+          <li><strong>Raw SVG</strong> – Self‑contained SVG, works offline.</li>
+          <li><strong>GitHub Actions</strong> – Native workflow status badge (exact URL format).</li>
+        </ul>
+      </div>
+      <div class="docs-section">
+        <h3>Usage</h3>
+        <p>1. Enter your label, message, and colours.<br>
+        2. Choose a style or leave default.<br>
+        3. Copy the HTML, Markdown, or raw URL from any badge card.<br>
+        4. Paste into your README or website.</p>
+        <p><code>HTML</code> – works in GitHub READMEs, websites.<br>
+        <code>Markdown</code> – standard <code>[![alt](url)](link)</code> format.<br>
+        <code>Output</code> – raw badge URL or SVG code.</p>
+      </div>
+      <div class="docs-section">
+        <h3>GitHub Actions Workflow</h3>
+        <p>Enter your repository (e.g., <code>owner/repo</code>) and workflow filename (e.g., <code>ci.yml</code>) to generate the exact badge URL that GitHub renders.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <p>⚡ FED‑Badge Pro · Built for GitHub · All services in one place.</p>
+  </footer>
+</div>
+
+<!-- ===== TOAST ===== -->
+<div class="toast" id="toast">✅ Copied!</div>
+
+<script>
+  // ===== DOM refs =====
+  const linkUrl = document.getElementById('linkUrl');
+  const styleInput = document.getElementById('styleInput');
+  const leftText = document.getElementById('leftText');
+  const rightText = document.getElementById('rightText');
+  const rightColor = document.getElementById('rightColor');
+  const leftColor = document.getElementById('leftColor');
+  const colorPicker = document.getElementById('colorPicker');
+  const labelColorPicker = document.getElementById('labelColorPicker');
+  const repoInput = document.getElementById('repoInput');
+  const workflowInput = document.getElementById('workflowInput');
+  const badgeGrid = document.getElementById('badgeGrid');
+  const toast = document.getElementById('toast');
+
+  // Color picker sync
+  colorPicker.addEventListener('input', () => {
+    rightColor.value = colorPicker.value.replace('#', '');
+    generateAll();
+  });
+  rightColor.addEventListener('input', () => {
+    let val = rightColor.value.trim();
+    if (val.startsWith('#')) val = val.replace('#', '');
+    colorPicker.value = '#' + val;
+    generateAll();
+  });
+  labelColorPicker.addEventListener('input', () => {
+    leftColor.value = labelColorPicker.value.replace('#', '');
+    generateAll();
+  });
+  leftColor.addEventListener('input', () => {
+    let val = leftColor.value.trim();
+    if (val.startsWith('#')) val = val.replace('#', '');
+    labelColorPicker.value = '#' + val;
+    generateAll();
+  });
+
+  // ===== Presets =====
+  const PRESETS = {
+    'github-sponsors': { link: 'https://github.com/sponsors/YOUR_USERNAME', left: 'Sponsor', right: 'GitHub', rightColor: 'ea4aaa', leftColor: '24292e' },
+    'patreon': { link: 'https://patreon.com/YOUR_USERNAME', left: 'Support', right: 'Patreon', rightColor: 'ff424d', leftColor: '052d49' },
+    'buymeacoffee': { link: 'https://buymeacoffee.com/YOUR_USERNAME', left: 'Buy Me A Coffee', right: 'Coffee', rightColor: 'ffdd00', leftColor: '24292e' },
+    'kofi': { link: 'https://ko-fi.com/YOUR_USERNAME', left: 'Ko-fi', right: 'Support Me', rightColor: 'ff5e5b', leftColor: '29abe2' },
+    'discord': { link: 'https://discord.gg/YOUR_INVITE', left: 'Discord', right: 'Join Server', rightColor: '5865f2', leftColor: '24292e' },
+    'fedos': { link: 'https://fedpromptly.com', left: 'FED-OS', right: 'Active', rightColor: '0052cc', leftColor: '24292e' },
+    'dpromptly': { link: 'https://fedpromptly.com', left: 'Network', right: 'DPromptly', rightColor: 'cc317c', leftColor: '24292e' },
+    'embeddable': { link: 'https://fedpromptly.com', left: 'Code', right: 'Embeddable', rightColor: '2ea043', leftColor: '24292e' },
+    'community': { link: 'https://fedpromptly.com', left: 'Community', right: 'Join Server', rightColor: '5865f2', leftColor: '24292e' },
+    'build-passing': { link: 'https://example.com', left: 'Build', right: 'Passing', rightColor: 'brightgreen', leftColor: '555' },
+    'coverage': { link: 'https://example.com', left: 'Coverage', right: '100%', rightColor: 'green', leftColor: '555' },
+    'license': { link: 'https://example.com', left: 'License', right: 'MIT', rightColor: 'blue', leftColor: '555' },
+    'version': { link: 'https://example.com', left: 'Version', right: 'v1.0.0', rightColor: 'orange', leftColor: '555' }
+  };
+
+  function applyPreset(name) {
+    const p = PRESETS[name];
+    if (!p) return;
+    linkUrl.value = p.link;
+    leftText.value = p.left;
+    rightText.value = p.right;
+    rightColor.value = p.rightColor;
+    leftColor.value = p.leftColor;
+    colorPicker.value = '#' + p.rightColor;
+    labelColorPicker.value = '#' + p.leftColor;
+    // Switch to generator tab
+    switchTab('generator');
+    generateAll();
+    showToast(`✅ Loaded "${p.left} · ${p.right}"`);
+  }
+  window.applyPreset = applyPreset;
+
+  // ===== Generate all badges =====
+  function generateAll() {
+    const link = linkUrl.value.trim() || 'https://example.com';
+    const label = leftText.value.trim() || 'LABEL';
+    const message = rightText.value.trim() || 'STATUS';
+    let color = rightColor.value.trim() || '0052cc';
+    if (color.startsWith('#')) color = color.replace('#', '');
+    let labelColor = leftColor.value.trim() || '555';
+    if (labelColor.startsWith('#')) labelColor = labelColor.replace('#', '');
+    const style = styleInput.value.trim();
+    const repo = repoInput.value.trim() || 'owner/repo';
+    const workflow = workflowInput.value.trim() || 'ci.yml';
+
+    const services = [];
+
+    // 1. Shields.io
+    let shieldUrl = `https://img.shields.io/badge/${encodeURIComponent(label)}-${encodeURIComponent(message)}-${color}`;
+    const shieldParams = new URLSearchParams();
+    if (labelColor) shieldParams.set('labelColor', labelColor);
+    if (style) shieldParams.set('style', style);
+    const shieldQuery = shieldParams.toString();
+    if (shieldQuery) shieldUrl += '?' + shieldQuery;
+    services.push({ name: 'Shields.io', output: shieldUrl, preview: shieldUrl, isSVG: false });
+
+    // 2. Badgen.net
+    const badgenUrl = `https://badgen.net/badge/${encodeURIComponent(label)}/${encodeURIComponent(message)}/${color}`;
+    services.push({ name: 'Badgen.net', output: badgenUrl, preview: badgenUrl, isSVG: false });
+
+    // 3. Badges.ws
+    let badgesWsUrl = `https://badges.ws/badge/${encodeURIComponent(label)}/${encodeURIComponent(message)}/${color}`;
+    if (style) badgesWsUrl += `?style=${style}`;
+    services.push({ name: 'Badges.ws', output: badgesWsUrl, preview: badgesWsUrl, isSVG: false });
+
+    // 4. BadgeWind
+    const bwParams = new URLSearchParams();
+    bwParams.set('label', label);
+    bwParams.set('message', message);
+    bwParams.set('color', color);
+    if (labelColor) bwParams.set('labelColor', labelColor);
+    if (style) bwParams.set('style', style);
+    const badgeWindUrl = `https://badgewind.vercel.app/api/badge?${bwParams.toString()}`;
+    services.push({ name: 'BadgeWind', output: badgeWindUrl, preview: badgeWindUrl, isSVG: false });
+
+    // 5. Raw SVG
+    const leftW = Math.max(label.length * 7 + 14, 40);
+    const rightW = Math.max(message.length * 7 + 14, 45);
+    const totalW = leftW + rightW;
+    const lAnchor = Math.floor((leftW / 2) * 10);
+    const rAnchor = Math.floor((leftW + (rightW / 2)) * 10);
+    const lLen = Math.floor((leftW - 10) * 10);
+    const rLen = Math.floor((rightW - 10) * 10);
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${totalW}" height="20" role="img">
+  <clipPath id="r"><rect width="${totalW}" height="20" rx="4" fill="#fff"/></clipPath>
+  <g clip-path="url(#r)">
+    <rect width="${leftW}" height="20" fill="#${labelColor}"/>
+    <rect x="${leftW}" width="${rightW}" height="20" fill="#${color}"/>
+  </g>
+  <g fill="#fff" text-anchor="middle" font-family="Verdana,sans-serif" text-rendering="geometricPrecision" font-size="110">
+    <text x="${lAnchor}" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="${lLen}">${label}</text>
+    <text x="${lAnchor}" y="140" transform="scale(.1)" textLength="${lLen}">${label}</text>
+    <text x="${rAnchor}" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="${rLen}">${message}</text>
+    <text x="${rAnchor}" y="140" transform="scale(.1)" textLength="${rLen}">${message}</text>
+  </g>
+</svg>`;
+    const encoded = encodeURIComponent(svg);
+    const dataUri = `data:image/svg+xml;charset=utf-8,${encoded}`;
+    services.push({ name: 'Raw SVG', output: svg, preview: dataUri, isSVG: true, rawSVG: svg });
+
+    // 6. GitHub Actions Workflow
+    const workflowUrl = `https://github.com/${repo}/actions/workflows/${workflow}/badge.svg`;
+    services.push({ name: 'GitHub Actions', output: workflowUrl, preview: workflowUrl, isSVG: false });
+
+    // Render grid
+    badgeGrid.innerHTML = '';
+    services.forEach(service => {
+      const card = document.createElement('div');
+      card.className = 'badge-card';
+
+      const nameEl = document.createElement('div');
+      nameEl.className = 'service-name';
+      nameEl.textContent = service.name;
+      card.appendChild(nameEl);
+
+      const previewEl = document.createElement('div');
+      previewEl.className = 'preview';
+      if (service.isSVG) {
+        previewEl.innerHTML = service.rawSVG;
+      } else {
+        const img = document.createElement('img');
+        img.src = service.preview;
+        img.alt = `${label}: ${message}`;
+        previewEl.appendChild(img);
+      }
+      card.appendChild(previewEl);
+
+      const outputEl = document.createElement('div');
+      outputEl.className = 'output';
+      outputEl.textContent = service.isSVG ? service.rawSVG : service.output;
+      card.appendChild(outputEl);
+
+      const btnGroup = document.createElement('div');
+      btnGroup.className = 'btn-group';
+
+      // Copy Output (URL or SVG)
+      const copyBtn = document.createElement('button');
+      copyBtn.className = 'btn btn-copy';
+      copyBtn.textContent = '📋 Output';
+      copyBtn.addEventListener('click', () => {
+        const text = service.isSVG ? service.rawSVG : service.output;
+        copyText(text, `${service.name} output`);
+      });
+      btnGroup.appendChild(copyBtn);
+
+      // Copy HTML (only for image badges)
+      if (!service.isSVG) {
+        const htmlBtn = document.createElement('button');
+        htmlBtn.className = 'btn';
+        htmlBtn.textContent = '📋 HTML';
+        htmlBtn.addEventListener('click', () => {
+          const html = `<a href='${link}' target='_blank'>
+    <img height='36' style='border:0px;height:36px;' src='${service.output}' border='0' alt='${label}: ${message}' />
+</a>`;
+          copyText(html, `${service.name} HTML`);
+        });
+        btnGroup.appendChild(htmlBtn);
+
+        // Copy Markdown
+        const mdBtn = document.createElement('button');
+        mdBtn.className = 'btn btn-markdown';
+        mdBtn.textContent = '📝 Markdown';
+        mdBtn.addEventListener('click', () => {
+          const md = `[![${label}: ${message}](${service.output})](${link})`;
+          copyText(md, `${service.name} Markdown`);
+        });
+        btnGroup.appendChild(mdBtn);
+      }
+
+      card.appendChild(btnGroup);
+      badgeGrid.appendChild(card);
+    });
+
+    // Store all HTML and Markdown for Copy All
+    const allHtml = services.filter(s => !s.isSVG).map(s => {
+      return `<a href='${link}' target='_blank'>
+    <img height='36' style='border:0px;height:36px;' src='${s.output}' border='0' alt='${label}: ${message}' />
+</a>`;
+    }).join('\n\n');
+    const allMd = services.filter(s => !s.isSVG).map(s => {
+      return `[![${label}: ${message}](${s.output})](${link})`;
+    }).join('\n\n');
+    window._allHtml = allHtml;
+    window._allMd = allMd;
+  }
+
+  // ===== Copy helper with toast =====
+  function copyText(text, label) {
+    navigator.clipboard.writeText(text).then(() => {
+      showToast(`✅ ${label || 'Copied'}!`);
+    }).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast(`✅ ${label || 'Copied'}!`);
+    });
+  }
+
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(toast._timer);
+    toast._timer = setTimeout(() => toast.classList.remove('show'), 2000);
+  }
+
+  // ===== Copy All buttons =====
+  document.getElementById('copyAllHtmlBtn').addEventListener('click', () => {
+    const html = window._allHtml || '';
+    copyText(html, 'All HTML snippets');
+  });
+  document.getElementById('copyAllMarkdownBtn').addEventListener('click', () => {
+    const md = window._allMd || '';
+    copyText(md, 'All Markdown snippets');
+  });
+
+  // ===== Tab switching =====
+  function switchTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.header nav button').forEach(el => el.classList.remove('active'));
+    document.getElementById(`tab-${tabId}`).classList.add('active');
+    document.querySelector(`.header nav button[data-tab="${tabId}"]`).classList.add('active');
+  }
+  document.querySelectorAll('.header nav button').forEach(btn => {
+    btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+  });
+
+  // ===== Bind inputs =====
+  [linkUrl, styleInput, leftText, rightText, rightColor, leftColor, colorPicker, labelColorPicker, repoInput, workflowInput].forEach(el => {
+    el.addEventListener('input', generateAll);
+  });
+
+  // ===== Init =====
+  generateAll();
+</script>
+</body>
+</html>

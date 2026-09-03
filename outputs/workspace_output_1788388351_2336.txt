@@ -1,0 +1,12 @@
+total 48
+drwxr-xr-x  7 user user  4096 Sep  2 22:32 .
+drwxr-xr-x 20 root root  4096 Jun 22 03:39 ..
+drwxr-xr-x  4 user user  4096 Jun 19 10:20 .agent_hooks
+drwxr-xr-x 10 root root  4096 Sep  2 22:32 .browser_data
+drwxr-xr-x  3 root root  4096 Jun 22 03:37 .psiphon_data
+-rw-r--r--  1 root root 17834 Sep  2 22:31 FED-Bages-All-SVG-badge-services-main.zip
+drwxr-xr-x  2 root root  4096 Sep  2 22:32 outputs
+drwxr-xr-x  2 root root  4096 Sep  2 22:32 summarized_conversations
+---
+-rw-r--r-- 1 root root 17834 Sep  2 22:31 /workspace/FED-Bages-All-SVG-badge-services-main.zip
+/workspace/FED-Bages-All-SVG-badge-services-main.zip: Zip archive data, at least v1.0 to extract, compression method=store

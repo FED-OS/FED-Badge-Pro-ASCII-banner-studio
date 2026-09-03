@@ -1,0 +1,27 @@
+=== FED-Badge v3.1 Final File Inventory ===
+FED-Badge/.github/CODE_OF_CONDUCT.md
+FED-Badge/.github/FUNDING.yml
+FED-Badge/.github/ISSUE_TEMPLATE/bug_report.md
+FED-Badge/.github/ISSUE_TEMPLATE/feature_request.md
+FED-Badge/.github/PULL_REQUEST_TEMPLATE.md
+FED-Badge/.github/social-preview.svg
+FED-Badge/.github/workflows/deploy.yml
+FED-Badge/.gitignore
+FED-Badge/CHANGELOG.md
+FED-Badge/CONTRIBUTING.md
+FED-Badge/LICENSE
+FED-Badge/LICENSE.md
+FED-Badge/README.md
+FED-Badge/SECURITY.md
+FED-Badge/index.html
+FED-Badge/styles.css
+
+=== Line counts ===
+ 1118 FED-Badge/index.html
+  464 FED-Badge/styles.css
+  153 FED-Badge/README.md
+   82 FED-Badge/CHANGELOG.md
+ 1817 total
+
+=== Zip file ===
+-rw-r--r-- 1 root root 32K Sep  3 05:41 FED-Badge-v3.1.zip

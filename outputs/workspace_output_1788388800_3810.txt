@@ -1,0 +1,1 @@
+333:    let shieldUrl = `https://img.shields.io/badge/${encodeURIComponent(label)}-${encodeURIComponent(message)}-${color}`;

@@ -1,0 +1,14 @@
+    speedSlider.addEventListener('input', function () {
+      state.speed = parseInt(speedSlider.value, 10);
+      speedVal.textContent = state.speed + '×';
+      localStorage.setItem('fed-etch-speed', String(state.speed));
+    });
+
+    window.addEventListener('resize', function () {
+      if (state.asciiLines.length) { resizeCanvas(); drawStatic(); }
+    });
+
+    return { init: resizeCanvas };
+  })();
+
+  /* ======================================================================

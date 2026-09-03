@@ -1,0 +1,24 @@
+=== FINAL PROJECT STRUCTURE ===
+./.github/FUNDING.yml
+./.gitignore
+./CHANGELOG.md
+./CONTRIBUTING.md
+./LICENSE
+./LICENSE.md
+./README.md
+./SECURITY.md
+./index.html
+./styles.css
+
+=== FILE SIZES ===
+  893 index.html
+  447 styles.css
+  137 README.md
+   58 CHANGELOG.md
+   84 CONTRIBUTING.md
+   21 LICENSE
+   19 LICENSE.md
+   41 SECURITY.md
+   32 .gitignore
+   14 .github/FUNDING.yml
+ 1746 total

@@ -1,0 +1,28 @@
+  adding: LICENSE.md (deflated 41%)
+  adding: .gitignore (deflated 33%)
+  adding: .github/ (stored 0%)
+  adding: .github/FUNDING.yml (deflated 41%)
+  adding: CONTRIBUTING.md (deflated 48%)
+  adding: CHANGELOG.md (deflated 48%)
+  adding: LICENSE (deflated 41%)
+  adding: SECURITY.md (deflated 44%)
+  adding: index.html (deflated 73%)
+  adding: styles.css (deflated 75%)
+  adding: README.md (deflated 57%)
+=== ZIP CREATED ===
+Archive:  /workspace/FED-Badge-v3.0.zip
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+      819  2026-09-02 22:33   LICENSE.md
+      433  2026-09-02 22:33   .gitignore
+        0  2026-09-02 22:33   .github/
+      371  2026-09-02 22:33   .github/FUNDING.yml
+     2881  2026-09-02 22:33   CONTRIBUTING.md
+     3053  2026-09-02 22:33   CHANGELOG.md
+     1077  2026-09-02 22:33   LICENSE
+     1231  2026-09-02 22:33   SECURITY.md
+    37078  2026-09-02 22:40   index.html
+    10505  2026-09-02 22:35   styles.css
+     6191  2026-09-02 22:34   README.md
+---------                     -------
+    63639                     11 files

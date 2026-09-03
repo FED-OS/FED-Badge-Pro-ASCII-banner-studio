@@ -1,0 +1,12 @@
+=== styles.css referenced? ===
+2
+=== inline <style> present? (should be 0) ===
+0
+NONE FOUND
+=== your-username remaining? (should be 0) ===
+./todo.md:1
+=== CC0 in LICENSE? (should be 0) ===
+0
+NONE
+=== MIT in LICENSE? (should be present) ===
+1

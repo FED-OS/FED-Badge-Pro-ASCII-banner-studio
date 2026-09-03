@@ -1,0 +1,15 @@
+
+      <!-- Controls -->
+      <div class="studio-controls">
+        <div class="style-wrap">
+          <label for="animStyle">Animation</label>
+          <select id="animStyle">
+            <option value="cascade">Cascade</option>
+            <option value="matrix">Matrix Rain</option>
+            <option value="typewriter">Typewriter</option>
+            <option value="reveal">Reveal Wipe</option>
+          </select>
+        </div>
+        <div class="speed-wrap">
+          <label for="speedSlider">Speed</label>
+          <input type="range" id="speedSlider" min="1" max="20" value="8" />

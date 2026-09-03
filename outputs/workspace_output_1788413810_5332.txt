@@ -1,0 +1,9 @@
+121:        <div class="style-wrap">
+122:          <label for="animStyle">Animation</label>
+123:          <select id="animStyle">
+513:    const animStyleSel = document.getElementById('animStyle');
+530:    if (savedStyle) { animStyleSel.value = savedStyle; }
+541:      style: animStyleSel.value,
+874:      state.style = animStyleSel.value;
+1083:    animStyleSel.addEventListener('change', function () {
+1084:      state.style = animStyleSel.value;

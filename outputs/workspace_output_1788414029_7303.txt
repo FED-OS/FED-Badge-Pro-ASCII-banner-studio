@@ -1,0 +1,20 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [3.0.0] – 2026-09-02
+
+### Added
+- **FED‑ETCH ASCII Animation Studio** — a brand‑new tab that scans your local project folders and renders the file structure as animated ASCII art for README banners.
+- Demo Mode with a built‑in mock repository so you can try the studio instantly, no folder upload required.
+- Folder scanner using the modern `showDirectoryPicker()` API (Chrome / Edge) with a `webkitdirectory` fallback for Firefox and Safari.
+- ASCII tree renderer using proper Unicode box‑drawing characters (├──, └──, │).
+- Canvas‑based cascade animation engine with Play / Pause / Restart controls and an adjustable speed slider.
+- Static ASCII export — copy the rendered tree to the clipboard or download it as a `.txt` file.
+- Live progress bar and file counter during folder scans.
+- Configurable scan limits (max files, max depth, max file size) to keep rendering fast and safe.
+- LocalStorage persistence for animation speed and theme preferences.
+- External stylesheet (`styles.css`) now properly linked instead of duplicated inline.

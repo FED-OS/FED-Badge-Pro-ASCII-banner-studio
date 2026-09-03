@@ -1,0 +1,2 @@
+18:    <span class="badge-version">v3.0</span>
+298:    'version':         { link: 'https://github.com/FED-OS',                left: 'Version',     right: 'v3.0.0',       rightColor: 'orange', leftColor: '555' },

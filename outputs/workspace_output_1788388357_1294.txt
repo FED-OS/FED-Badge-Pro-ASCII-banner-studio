@@ -1,0 +1,25 @@
+Archive:  FED-Bages-All-SVG-badge-services-main.zip
+ca688f79f665cbcba041fd164e25fdae0474406c
+   creating: FED-Badge-extracted/FED-Bages-All-SVG-badge-services-main/
+   creating: FED-Badge-extracted/FED-Bages-All-SVG-badge-services-main/.github/
+  inflating: FED-Badge-extracted/FED-Bages-All-SVG-badge-services-main/.github/FUNDING.yml  
+  inflating: FED-Badge-extracted/FED-Bages-All-SVG-badge-services-main/.gitignore  
+  inflating: FED-Badge-extracted/FED-Bages-All-SVG-badge-services-main/CHANGELOG.md  
+  inflating: FED-Badge-extracted/FED-Bages-All-SVG-badge-services-main/CONTRIBUTING.md  
+  inflating: FED-Badge-extracted/FED-Bages-All-SVG-badge-services-main/LICENSE  
+  inflating: FED-Badge-extracted/FED-Bages-All-SVG-badge-services-main/LICENSE.md  
+  inflating: FED-Badge-extracted/FED-Bages-All-SVG-badge-services-main/README.md  
+  inflating: FED-Badge-extracted/FED-Bages-All-SVG-badge-services-main/SECURITY.md  
+  inflating: FED-Badge-extracted/FED-Bages-All-SVG-badge-services-main/index.html  
+  inflating: FED-Badge-extracted/FED-Bages-All-SVG-badge-services-main/styles.css  
+=== STRUCTURE ===
+FED-Badge-extracted/FED-Bages-All-SVG-badge-services-main/LICENSE.md
+FED-Badge-extracted/FED-Bages-All-SVG-badge-services-main/.gitignore
+FED-Badge-extracted/FED-Bages-All-SVG-badge-services-main/.github/FUNDING.yml
+FED-Badge-extracted/FED-Bages-All-SVG-badge-services-main/CONTRIBUTING.md
+FED-Badge-extracted/FED-Bages-All-SVG-badge-services-main/CHANGELOG.md
+FED-Badge-extracted/FED-Bages-All-SVG-badge-services-main/LICENSE
+FED-Badge-extracted/FED-Bages-All-SVG-badge-services-main/SECURITY.md
+FED-Badge-extracted/FED-Bages-All-SVG-badge-services-main/index.html
+FED-Badge-extracted/FED-Bages-All-SVG-badge-services-main/styles.css
+FED-Badge-extracted/FED-Bages-All-SVG-badge-services-main/README.md

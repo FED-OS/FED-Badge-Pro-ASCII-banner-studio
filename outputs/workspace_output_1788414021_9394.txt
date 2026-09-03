@@ -1,0 +1,31 @@
+# FED-Badge v3.1 Upgrade — Master Plan
+
+## Phase 1: Fix & Polish Core Files (DONE in v3.0)
+- [x] Fix LICENSE contradiction
+- [x] Remove placeholders, rewrite CONTRIBUTING/CHANGELOG/README
+- [x] External styles.css
+- [x] FED-ETCH ASCII Studio (Demo Mode, scanner, cascade animation, export)
+
+## Phase 2: GitHub Community Files (v3.1)
+- [ ] Create .github/CODE_OF_CONDUCT.md
+- [ ] Create .github/ISSUE_TEMPLATE/bug_report.md
+- [ ] Create .github/ISSUE_TEMPLATE/feature_request.md
+- [ ] Create .github/PULL_REQUEST_TEMPLATE.md
+- [ ] Create .github/workflows/deploy.yml (GitHub Pages deploy)
+- [ ] Create social-preview.svg (1280x640 OG image)
+
+## Phase 3: Upgrade FED-ETCH — Multiple Animation Styles (v3.1)
+- [ ] Add animation style selector (Cascade, Matrix, Typewriter, Reveal)
+- [ ] Implement Matrix rain style
+- [ ] Implement Typewriter style (line-by-line reveal)
+- [ ] Implement Reveal style (top-down wipe)
+
+## Phase 4: WebM Video Export (v3.1)
+- [ ] Add "Record WebM" button using MediaRecorder + canvas.captureStream
+- [ ] Download as .webm after animation completes
+
+## Phase 5: Polish & Finalize
+- [ ] Update README + CHANGELOG for v3.1
+- [ ] Add CODE_OF_CONDUCT to README structure tree
+- [ ] Browser-test new styles + WebM export
+- [ ] Repackage zip

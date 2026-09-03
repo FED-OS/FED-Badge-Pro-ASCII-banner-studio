@@ -1,0 +1,16 @@
+115:        <button class="studio-btn" id="recordBtn" disabled>⏺ Record WebM</button>
+511:    const recordBtn    = document.getElementById('recordBtn');
+513:    const animStyleSel = document.getElementById('animStyle');
+530:    if (savedStyle) { animStyleSel.value = savedStyle; }
+541:      style: animStyleSel.value,
+679:    function initDrops() {
+690:    function resizeCanvas() {
+697:    function drawStatic() {
+708:    function animate() {
+739:    function startAnimation() {
+749:    function pauseAnimation() {
+756:    function restartAnimation() {
+761:    function updateProgress(pct) {
+765:    function countFiles(node) {
+770:    function countDirs(node) {
+776:    function loadTree(tree) {

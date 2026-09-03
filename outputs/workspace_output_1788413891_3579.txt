@@ -1,0 +1,5 @@
+Page text: ⚡ FED‑Badge Pro v3.0 Generator Presets ASCII Studio Docs 🖥️ FED‑ETCH — ASCII Animation Studio Scan a local folder and render its file structure as animated ASCII art for your README banners. Or hit Demo Mode to try it instantly with a built‑in mock repository. 📁 Scan Folder ✨ Demo Mode ▶ Play ⏸ Pause ↺ Restart ⏺ Record WebM 🗑 Clear ANIMATION Cascade Matrix Rain Typewriter Reveal Wipe SPEED 8× Files: 14 Dirs: 4 📋 Copy ASCII ⬇ Download .txt FED-Badge/ ├── index.html ├── styles.css ├── README.md ├── CHANGELOG.md ├── CONTRIBUTING.md ├── LICENSE ├── LICENSE.md ├── SECURITY.md ├── .gitignore ├── .github/ │ └── FUNDING.yml ├── docs/ │ ├── guide.md │ └── examples.md └── screenshots/ ├── generator.png └── studio.png MAX FILES MAX DEPTH MAX FILE SIZE (KB) Limits keep scans fast & safe. Folders starting with . are skipped. ⚡ FED‑Badge Pro · Built for GitHub · Badges + ASCII art, all in one place. ✨ Demo Mode loaded!
+
+Screenshot: /workspace/.screenshots/step_014.png
+Use see-image to view: /workspace/.screenshots/step_014.png
+=== END ===

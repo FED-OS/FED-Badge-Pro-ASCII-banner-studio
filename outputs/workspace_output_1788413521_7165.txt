@@ -1,0 +1,15 @@
+total 12
+drwxr-xr-x 2 root root 4096 Sep  2 22:33 .
+drwxr-xr-x 3 root root 4096 Sep  2 22:33 ..
+-rw-r--r-- 1 root root  371 Sep  2 22:33 FUNDING.yml
+---existing---
+./.github/FUNDING.yml
+./.gitignore
+./CHANGELOG.md
+./CONTRIBUTING.md
+./LICENSE
+./LICENSE.md
+./README.md
+./SECURITY.md
+./index.html
+./styles.css

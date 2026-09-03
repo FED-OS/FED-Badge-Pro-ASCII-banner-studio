@@ -1,0 +1,45 @@
+=== BROWSER STATE ===
+URL: http://localhost:8095/index.html
+Title: FED‑Badge Pro · Badge & ASCII Banner Studio
+Result: ERROR: screenshot failed — Error: Unsupported screenshot mime type for path "/workspace/.screenshots/studio_gen": None
+
+Interactive elements (32):
+  [0] button "Generator"
+  [1] button "Presets"
+  [2] button "ASCII Studio"
+  [3] button "Docs"
+  [4] input type="text"
+  [5] input type="text"
+  [6] input type="text"
+  [7] input type="text"
+  [8] input type="color"
+  [9] input type="text"
+  [10] input type="color"
+  [11] input type="text"
+  [12] input type="text"
+  [13] input type="text"
+  [14] button "📋 Output"
+  [15] button "📋 HTML"
+  [16] button "📝 Markdown"
+  [17] button "📋 Output"
+  [18] button "📋 HTML"
+  [19] button "📝 Markdown"
+  [20] button "📋 Output"
+  [21] button "📋 HTML"
+  [22] button "📝 Markdown"
+  [23] button "📋 Output"
+  [24] button "📋 HTML"
+  [25] button "📝 Markdown"
+  [26] button "📋 Output"
+  [27] button "📋 Output"
+  [28] button "📋 HTML"
+  [29] button "📝 Markdown"
+  [30] button "📋 Copy All HTML"
+  [31] button "📝 Copy All Markdown"
+
+Accessibility tree:
+Page text: ⚡ FED‑Badge Pro v3.0 Generator Presets ASCII Studio Docs 🎛️ Badge Controls TARGET LINK (HREF) STYLE (OPTIONAL) LEFT LABEL RIGHT STATUS RIGHT COLOR LABEL COLOR REPOSITORY (FOR GITHUB ACTIONS) WORKFLOW FILENAME (FOR ACTIONS) SHIELDS.IO https://img.shields.io/badge/FED--OS-Active-0052cc?labelColor=24292e&style=flat 📋 Output 📋 HTML 📝 Markdown BADGEN.NET https://badgen.net/badge/FED-OS/Active/0052cc 📋 Output 📋 HTML 📝 Markdown BADGES.WS https://badges.ws/badge/FED-OS/Active/0052cc?style=flat 📋 Output 📋 HTML 📝 Markdown BADGEWIND https://badgewind.vercel.app/api/badge?label=FED-OS&message=Active&color=0052cc&labelColor=24292e&style=flat 📋 Output 📋 HTML 📝 Markdown RAW SVG FED-OS FED-OS Active Active <svg xmlns="http://www.w3.org/2000/svg" width="112" height="20" role="img"> <clipPath id="r"><rect width="112" height="20" rx="4" fill="#fff"/></clipPath> <g clip-path="url(#r)"> <rect width="56" height="20" fill="#24292e"/> <rect x="56" width="56" height="20" fill="#0052cc"/> </g> <g fill="#fff" text-anchor="middle" font-family="Verdana,sans-serif" text-rendering="geometricPrecision" font-size="110"> <text x="280" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="460">FED-OS</text> <text x="280" y="140" transform="scale(.1)" textLength="460">FED-OS</text> <text x="840" y="150" fill="#010101" fill-opacity=".3" transform="scale(.1)" textLength="460">Active</text> <text x="840" y="140" transform="scale(.1)" textLength="460">Active</text> </g> </svg> 📋 Output GITHUB ACTIONS https://github.com/Fedpromptly/demo-repository/actions/workflows/ci.yml/badge.svg 📋 Output 📋 HTML 📝 Markdown 📋 Copy All HTML 📝 Copy All Markdown ⚡ FED‑Badge Pro · Built for GitHub · Badges + ASCII art, all in one place. ✅ Copied!
+
+Screenshot: /workspace/.screenshots/step_002.png
+Use see-image to view: /workspace/.screenshots/step_002.png
+=== END ===

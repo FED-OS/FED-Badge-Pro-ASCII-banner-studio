@@ -1,0 +1,85 @@
+          progressWrap.classList.remove('active');
+          if (err.name !== 'AbortError') showToast('⚠️ Scan failed: ' + err.message);
+        }
+      } else {
+        folderInput.click();
+      }
+    });
+
+    folderInput.addEventListener('change', function (e) {
+      const files = Array.from(e.target.files || []);
+      if (!files.length) return;
+      progressWrap.classList.add('active');
+      updateProgress(20);
+      const maxFiles = parseInt(cfgMaxFiles.value, 10) || 500;
+      const maxDepth = parseInt(cfgMaxDepth.value, 10) || 15;
+      const maxSize  = parseInt(cfgMaxSize.value, 10)  || 50;
+      setTimeout(function () {
+        const tree = buildTreeFromFileList(files, maxFiles, maxDepth, maxSize);
+        loadTree(tree);
+        showToast('✅ Folder scanned!');
+      }, 60);
+    });
+
+    demoBtn.addEventListener('click', function () {
+      progressWrap.classList.add('active');
+      updateProgress(50);
+      setTimeout(function () {
+        loadTree(JSON.parse(JSON.stringify(DEMO_REPO)));
+        showToast('✨ Demo Mode loaded!');
+      }, 120);
+    });
+
+    playBtn.addEventListener('click', startAnimation);
+    pauseBtn.addEventListener('click', pauseAnimation);
+    restartBtn.addEventListener('click', restartAnimation);
+    clearBtn.addEventListener('click', clearAll);
+
+    copyAsciiBtn.addEventListener('click', function () {
+      copyText(state.asciiLines.join('\n'), 'ASCII tree');
+    });
+    downloadBtn.addEventListener('click', function () {
+      if (!state.asciiLines.length) return;
+      const blob = new Blob([state.asciiLines.join('\n')], { type: 'text/plain' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = (state.tree ? state.tree.name : 'tree') + '.txt';
+      a.click();
+      URL.revokeObjectURL(a.href);
+      showToast('⬇ Downloaded .txt!');
+    });
+
+    speedSlider.addEventListener('input', function () {
+      state.speed = parseInt(speedSlider.value, 10);
+      speedVal.textContent = state.speed + '×';
+      localStorage.setItem('fed-etch-speed', String(state.speed));
+    });
+
+    window.addEventListener('resize', function () {
+      if (state.asciiLines.length) { resizeCanvas(); drawStatic(); }
+    });
+
+    return { init: resizeCanvas };
+  })();
+
+  /* ======================================================================
+     SECTION 3 — Tab switching & init
+     ====================================================================== */
+  function switchTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(function (el) { el.classList.remove('active'); });
+    document.querySelectorAll('.header nav button').forEach(function (el) { el.classList.remove('active'); });
+    document.getElementById('tab-' + tabId).classList.add('active');
+    const btn = document.querySelector('.header nav button[data-tab="' + tabId + '"]');
+    if (btn) btn.classList.add('active');
+    if (tabId === 'studio') ASCII.init();
+  }
+  document.querySelectorAll('.header nav button').forEach(function (btn) {
+    btn.addEventListener('click', function () { switchTab(btn.dataset.tab); });
+  });
+
+  // ===== Init =====
+  generateAll();
+  ASCII.init();
+</script>
+</body>
+</html>

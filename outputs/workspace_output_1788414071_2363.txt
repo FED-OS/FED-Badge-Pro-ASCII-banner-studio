@@ -1,0 +1,16 @@
+FED-Badge/.github/CODE_OF_CONDUCT.md
+FED-Badge/.github/FUNDING.yml
+FED-Badge/.github/ISSUE_TEMPLATE/bug_report.md
+FED-Badge/.github/ISSUE_TEMPLATE/feature_request.md
+FED-Badge/.github/PULL_REQUEST_TEMPLATE.md
+FED-Badge/.github/social-preview.svg
+FED-Badge/.github/workflows/deploy.yml
+FED-Badge/.gitignore
+FED-Badge/CHANGELOG.md
+FED-Badge/CONTRIBUTING.md
+FED-Badge/LICENSE
+FED-Badge/LICENSE.md
+FED-Badge/README.md
+FED-Badge/SECURITY.md
+FED-Badge/index.html
+FED-Badge/styles.css
