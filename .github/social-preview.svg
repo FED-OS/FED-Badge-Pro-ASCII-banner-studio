@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-label="FED-Badge Pro v3.1">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0d1117"/>
+      <stop offset="100%" stop-color="#161b22"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1f6feb"/>
+      <stop offset="100%" stop-color="#58a6ff"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1280" height="640" fill="url(#bg)"/>
+
+  <!-- Decorative border -->
+  <rect x="40" y="40" width="1200" height="560" rx="16" fill="none" stroke="#30363d" stroke-width="2"/>
+
+  <!-- Lightning icon -->
+  <text x="100" y="180" font-size="96" fill="#58a6ff">⚡</text>
+
+  <!-- Title -->
+  <text x="100" y="280" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="72" font-weight="700" fill="#f0f6fc">FED‑Badge</text>
+  <text x="560" y="280" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="72" font-weight="400" fill="#8b949e">Pro</text>
+
+  <!-- Version badge -->
+  <rect x="100" y="310" width="160" height="44" rx="22" fill="url(#accent)"/>
+  <text x="180" y="340" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="22" font-weight="600" fill="#ffffff" text-anchor="middle">v3.1</text>
+
+  <!-- Tagline -->
+  <text x="100" y="410" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="34" font-weight="400" fill="#c9d1d9">The all‑in‑one badge &amp; ASCII banner studio for GitHub.</text>
+
+  <!-- Feature bullets -->
+  <g font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="26" fill="#7ee787">
+    <text x="120" y="480">▸ 6 badge services — Shields.io · Badgen · BadgeWind · Raw SVG · Actions</text>
+    <text x="120" y="524">▸ FED‑ETCH ASCII animation studio with WebM export</text>
+    <text x="120" y="568">▸ Fully offline · No dependencies · MIT licensed</text>
+  </g>
+
+  <!-- Right-side badge mockups -->
+  <g transform="translate(880, 250)">
+    <rect width="280" height="40" rx="6" fill="#24292e"/>
+    <rect width="100" height="40" rx="6" fill="#24292e"/>
+    <rect x="100" width="180" height="40" rx="6" fill="#0052cc"/>
+    <text x="50" y="26" font-family="Verdana, sans-serif" font-size="14" fill="#ffffff" text-anchor="middle">FED‑OS</text>
+    <text x="190" y="26" font-family="Verdana, sans-serif" font-size="14" fill="#ffffff" text-anchor="middle">Active</text>
+
+    <rect y="56" width="280" height="40" rx="6" fill="#29abe2"/>
+    <rect x="100" y="56" width="180" height="40" rx="6" fill="#ff5e5b"/>
+    <text x="50" y="82" font-family="Verdana, sans-serif" font-size="14" fill="#ffffff" text-anchor="middle">Ko‑fi</text>
+    <text x="190" y="82" font-family="Verdana, sans-serif" font-size="14" fill="#ffffff" text-anchor="middle">Support Me</text>
+
+    <rect y="112" width="280" height="40" rx="6" fill="#555"/>
+    <rect x="100" y="112" width="180" height="40" rx="6" fill="#brightgreen"/>
+    <rect x="100" y="112" width="180" height="40" rx="6" fill="#2ea043"/>
+    <text x="50" y="138" font-family="Verdana, sans-serif" font-size="14" fill="#ffffff" text-anchor="middle">Build</text>
+    <text x="190" y="138" font-family="Verdana, sans-serif" font-size="14" fill="#ffffff" text-anchor="middle">Passing</text>
+  </g>
+
+  <!-- Footer -->
+  <text x="640" y="612" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="18" fill="#484f58" text-anchor="middle">github.com/FED-OS · Built for GitHub · Badges + ASCII art</text>
+</svg>
